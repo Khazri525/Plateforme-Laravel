@@ -252,4 +252,39 @@ public function update_profile (Request $request){
 }
 
 
+
+
+//Test (Quiz)
+
+public function identifier(Request $request) {
+    $validator = Validator::make($request->all(),[
+        'email'=> 'required|email|unique:stagiaires,email',
+        'cinoupassport_stagiaire'=> 'unique:stagiaires,cinoupass_stagiaire', 
+        'niveauetude'=>'required|string',
+
+    ]);
+    if($validator->fails()) {
+        return response()->json([
+            'validation_errors' => $validator->messages(),]);
+        
+    }
+    else{
+        $etudiant= Stagiaire::create([
+            'email'=> $request['email'],
+            'cinoupassport_stagiaire'=> $request['cinoupassport_stagiaire'],
+            'niveauetude'=>$request['niveauetude'],
+        ]);
+        $token = $etudiant->createToken($etudiant->cin.'_Token')->plainTextToken;
+   return response()->json([
+       'status'=>200,
+       'cinoupassport_stagiaire'=>$etudiant->cinoupassport_stagiaire,
+       'token'=>$token,
+       'message'=> 'bienvenue au test',
+   ]);
+      
+
+    }
+    
+}
+
 }
