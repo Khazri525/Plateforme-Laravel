@@ -27,7 +27,7 @@ class CreateStagiairesTable extends Migration
             $table->string('adresse'); 
             $table->numeric('telephone');
               //Relation
-              $table->array('demandeStages'); 
+              $table->object('demandeStages'); 
 
 
               //Relation2

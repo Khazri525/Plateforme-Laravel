@@ -30,7 +30,7 @@ class SujetStageController extends Controller
                'description'=>'required',
 
                'datedebut'=>'required',
-               'domaine'=>'required',
+               'nom_dept'=>'required',
                'typestage'=>'required',
                'periode'=>'required',
                //'etatsujet'=>'required',
@@ -57,7 +57,7 @@ class SujetStageController extends Controller
                'description'=> $request->description,
 
                'datedebut'=> $request->datedebut,
-               'domaine'=> $request->domaine,
+               'nom_dept'=> $request->nom_dept,
                'typestage'=> $request->typestage,
                'periode'=> $request->periode,
                'etatsujet'=> 'Publié',
@@ -139,7 +139,7 @@ class SujetStageController extends Controller
             'description'=>'required',
 
             'datedebut'=>'required',
-            'domaine'=>'required',
+            'nom_dept'=>'required',
             'typestage'=>'required',
             'periode'=>'required',
             'etatsujet'=>'required',
@@ -162,8 +162,7 @@ class SujetStageController extends Controller
                 $sujet->update($request->all());
                  //'nom_dept' => $request->nom_dept,
                  //'nom_chef_dept'=> $request->nom_chef_dept,
-                
-                
+            
     
                  $sujet->save();
                

@@ -13,13 +13,15 @@ class SujetStage extends Model
         'sujet',
         'technologies',
         'description',
-
-
         'datedebut',
-        'domaine',
+        'nom_dept',
         'typestage',
         'etatsujet',
         'periode',
-        
+     
     ];
+
+
+
+
 }

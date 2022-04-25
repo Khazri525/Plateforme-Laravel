@@ -9,7 +9,7 @@ class CreateDemandeStagesTable extends Migration
     /**
      * Run the migrations.
      *
-     * @return void
+     * @return void 
      */
     public function up()
     {
@@ -17,7 +17,7 @@ class CreateDemandeStagesTable extends Migration
             $table->id();
             //$table->string('NiveauEtude');
             $table->string('TypeStage');
-            $table->string('nomDepartement');
+            $table->string('nomDepartement');  
            // $table->string('cv')->nullable();
             $table->string('cv');
          // $table->file('cv');

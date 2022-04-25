@@ -19,7 +19,7 @@ class CreateSujetStagesTable extends Migration
             $table->string('technologies');
             $table->mediumText('description');
             $table->string('datedebut');
-            $table->string('domaine');
+            $table->string('nom_dept');
             $table->string('typestage');
             $table->string('etatsujet');
             $table->string('periode');

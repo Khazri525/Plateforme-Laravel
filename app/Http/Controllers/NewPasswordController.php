@@ -66,7 +66,7 @@ class NewPasswordController extends Controller
         if ($status == Password::RESET_LINK_SENT) {
             return response()->json(
              [
-               // 'status'=>200,
+                //'status'=>200,
                 'status' => __($status),
                 'message' =>'Vérifier votre Email',
             ]
@@ -77,10 +77,11 @@ class NewPasswordController extends Controller
 
         }
        
-         else{
+         else if(!$user){
             return response()->json(
             [
                 //'email' => [trans($status)],
+                'status'=>404,
                 'message' =>'Aucun utilisateur avec cet email',
             ]
 
@@ -274,13 +275,28 @@ class NewPasswordController extends Controller
 
 
 public function UresetPassword(Request $request)
-{
+{/* 
     $request->validate([
         'token' => 'required',
         'email' => 'required|email',
         'password' => ['required', 'confirmed', RulesPassword::defaults()],
     ]);
-    
+     */
+
+
+    $validator = Validator::make($request->all(), [
+            
+        'token' => 'required',
+        'email' => 'required|email',
+        'password' => ['required', 'confirmed', RulesPassword::defaults()],
+        
+                 ]);
+    if($validator->fails()) {
+        return response()->json([
+            'status'=>422,
+            'message'=>'vérifier les champs il ya un erreur',
+        ]);
+    }
  
 
     $status = Password::reset(
@@ -309,10 +325,12 @@ public function UresetPassword(Request $request)
 
         );
     }
-
+   
     return response([
-        'message'=> __($status)
-    ], 500);
+        'status'=>500,
+        // 'message'=> __($status)
+        'message'=>'utililisateur avec cet email non existe',
+    ]);
 
 }
 

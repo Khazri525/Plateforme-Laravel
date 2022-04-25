@@ -26,6 +26,13 @@ use App\Http\Controllers\BilanController;
 
 use App\Http\Controllers\MailController;
 
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ReponseController;
+use App\Http\Controllers\TestController;
+
+use App\Http\Controllers\EventController;
+
+
 // use App\Http\Controllers\AuthUtilisateursController;
 
 
@@ -257,3 +264,35 @@ Route::get('checkingAuthenticated', [AuthController::class, 'incheck']);
 });
 
 
+
+
+
+
+
+//Questions
+Route::get('/question', [QuestionController::class, 'index']); 
+Route::get('/allquestion', [QuestionController::class, 'allquestion']);
+ Route::get('/getramdom', [QuestionController::class, 'random']); // récuppérer les questions aléatoirement
+Route::get('/question/{id}', [QuestionController::class, 'show']); //récupérer question avec réponse 
+Route::delete('/question/{id}',[QuestionController::class, 'destroy']);
+Route::put('/question/{id}',[QuestionController::class, 'update']);
+Route::post('question',[QuestionController::class, 'store']); 
+Route::get('/question/{question}',[QuestionController::class,'search']);
+
+//réponses
+Route::get('/reponse', [ReponseController::class, 'index']);
+Route::get('/reponse/{id}', [ReponseController::class, 'show']);
+Route::put('/reponse/{id}',[ReponseController::class, 'update']);
+Route::delete('/reponse/{id}',[ReponseController::class, 'destroy']);
+Route::post('reponse', [ReponseController::class, 'store']);
+
+//test
+Route::post('test',[TestController::class,'store']);
+Route::get('/test',[TestController::class,'index']);
+
+//calendrier
+Route::get('events',[EventController::class,'index']);
+Route::delete('event/{id}',[EventController::class, 'destroy']);
+Route::put('event/{id}',[EventController::class, 'update']);
+Route::post('event',[EventController::class, 'store']); 
+Route::get('event/{id}', [EventController::class, 'show']); 

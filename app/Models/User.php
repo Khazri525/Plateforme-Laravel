@@ -14,7 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 //relation
 use App\Models\Departement;
 
-
+use App\Models\Sujet;
 use App\Notifications\ResetPasswordNotification;
 
 
@@ -46,6 +46,9 @@ class User  extends Authenticatable
         'matricule',
         //Relation
         'departement',
+
+
+       
     ];
     
     //relation
