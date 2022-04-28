@@ -69,6 +69,7 @@ public function refuser(Request $request){
    return response()->json([
              'status'=>200,
              'message '=> 'Email Refus du stagiaire envoyé avec succès',
+           
 
         ],200);
     }

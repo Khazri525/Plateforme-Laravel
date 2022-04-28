@@ -51,6 +51,7 @@ class Stagiaire extends EloquentModel
 
     //Relation
     public static function demandeStages(){
+        //return $this->embedsMany(DemandeStage::class);
         return $this->embedsMany(DemandeStage::class);
         
      } 

@@ -32,12 +32,8 @@ class CompteController extends Controller
     
 
 
-    //retourner un utilisateur par Id
+   //retourner un utilisateur par Id
    public function show($id){
-
-
- 
-
     $user= User::find($id);
     if($user){
 
@@ -55,10 +51,12 @@ class CompteController extends Controller
          ]);   
      
     }
- 
-
-
 } 
+
+
+
+
+
     //Modifier utilisateur
  public function update(Request $request, $id)
 {

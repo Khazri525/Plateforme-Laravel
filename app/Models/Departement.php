@@ -20,6 +20,7 @@ class Departement extends Model
     protected $fillable = [
         'nom_dept',
         'nom_chef_dept',
+        'etat',
          //Relation
         'users',
 

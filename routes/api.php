@@ -290,6 +290,8 @@ Route::post('reponse', [ReponseController::class, 'store']);
 Route::post('test',[TestController::class,'store']);
 Route::get('/test',[TestController::class,'index']);
 
+
+Route::post('identifier/stage',[AuthControllerStagiaire::class,' identifier']);
 //calendrier
 Route::get('events',[EventController::class,'index']);
 Route::delete('event/{id}',[EventController::class, 'destroy']);

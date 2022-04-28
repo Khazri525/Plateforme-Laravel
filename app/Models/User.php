@@ -13,6 +13,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 //relation
 use App\Models\Departement;
+use App\Models\SujetStage;
+
 
 use App\Models\Sujet;
 use App\Notifications\ResetPasswordNotification;
@@ -48,12 +50,22 @@ class User  extends Authenticatable
         'departement',
 
 
+        //Relation
+        'sujetsEn',
+
+
        
     ];
     
     //relation
     public static function departements(){
         return $this->embedsOne(Departement::class);
+    }
+
+
+      //relation
+      public static function sujetsEn(){
+        return $this->embedsMany(SujetStage::class);
     }
 
     /**

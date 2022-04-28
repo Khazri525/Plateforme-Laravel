@@ -15,19 +15,14 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-
             $table->string('question');
             $table->string('niveau');
             $table->integer('duree');
             $table->string('etat');
             $table->integer('points');
-            $table->string('repA');
-            $table->string('repB');
-            $table->string('repC');
-            $table->string('repD');
-            $table->string('repcorrecte?');
-            
+            $table->array('réponses');
             $table->timestamps();
+     
         });
     }
 

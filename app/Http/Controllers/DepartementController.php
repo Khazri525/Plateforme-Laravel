@@ -27,9 +27,9 @@ class DepartementController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'nom_dept'=>'required|string|max:20 ',
+            'nom_dept'=>'required ',
             'nom_chef_dept'=>'required|string|max:20 ',
-           
+             
     
         ]);
 
@@ -49,6 +49,7 @@ class DepartementController extends Controller
         $dept = Departement::create([
             'nom_dept' => $request->nom_dept,
             'nom_chef_dept'=> $request->nom_chef_dept,
+            'etat'=> 'Active',
              //Relation
              'users'=>[],
             
@@ -98,7 +99,7 @@ class DepartementController extends Controller
  {
  
      $validator = Validator::make($request->all(),[
-        'nom_dept'=>'required|string|max:20 ',
+        'nom_dept'=>'required ',
         'nom_chef_dept'=>'required|string|max:20 ',
  
      ]);

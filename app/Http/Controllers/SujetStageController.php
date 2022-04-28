@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SujetStage;
+use App\Models\User;
 use Validator;
 
 class SujetStageController extends Controller
@@ -28,12 +29,14 @@ class SujetStageController extends Controller
                'sujet'=>'required',
                'technologies'=>'required',
                'description'=>'required',
-
                'datedebut'=>'required',
                'nom_dept'=>'required',
                'typestage'=>'required',
                'periode'=>'required',
                //'etatsujet'=>'required',
+
+               //Relation
+               'matricule_sj'=>'unique:sujetsEn,matricule_sj',
                
                
            ]);
@@ -50,7 +53,6 @@ class SujetStageController extends Controller
            else{    
    
      // return Compte::create($request->all());
-            
               $sujet = SujetStage::create([
                'sujet' => $request->sujet,
                'technologies'=> $request->technologies,
@@ -61,10 +63,26 @@ class SujetStageController extends Controller
                'typestage'=> $request->typestage,
                'periode'=> $request->periode,
                'etatsujet'=> 'Publié',
-               
+              // 'stusujet'=>'Active',
+
+              //Relation
+               'matricule_sj'=> $request->matricule_sj,
+
+
+
+
+
+
                
                
             ]);
+
+      //.Relation
+
+      $matricule_en= User::where ('maricule', $request->matricule_sj)->push(
+        ['sujetsEn'=>[ $sujet ->sujet,$sujet ->technologies ,$sujet ->description ] ]);
+    
+        //.Relation
    
             return response()->json(
                 ['message' => 'Sujet de stage ajouté avec succès',
@@ -143,6 +161,8 @@ class SujetStageController extends Controller
             'typestage'=>'required',
             'periode'=>'required',
             'etatsujet'=>'required',
+           // 'stusujet'=>'required',
+           'matricule_sj'=>'required',
             
             
            

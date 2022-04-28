@@ -17,6 +17,7 @@ class CreateDepartementsTable extends Migration
             $table->id();
             $table->string('nomDepartement');
             $table->string('nomChefDepartement');
+            $table->string('etat');
             //Relation
             $table->array('users');
             $table->timestamps();

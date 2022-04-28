@@ -55,6 +55,20 @@ class NewPasswordController extends Controller
         $request->validate([
             'email' => 'required|email',
         ]);
+
+
+        if($request->validate->email->fails()){
+            return response([
+                'status'=> 422,
+                'validation_errors' => $request->validate->email->messages() ,
+                'message' =>'Vérifier votre Email !'
+               
+               
+                ]
+                
+            );
+    
+         }
    
 
         $user =User::where('email',$request->email)->first();
@@ -294,6 +308,7 @@ public function UresetPassword(Request $request)
     if($validator->fails()) {
         return response()->json([
             'status'=>422,
+            'validation_errors' => $validator->messages() ,
             'message'=>'vérifier les champs il ya un erreur',
         ]);
     }

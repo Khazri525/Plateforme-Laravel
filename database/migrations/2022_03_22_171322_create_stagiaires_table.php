@@ -19,7 +19,7 @@ class CreateStagiairesTable extends Migration
             $table->string('prenom'); 
             $table->date('datenaissance');
             $table->string('email')->unique();
-            $table->integer('cinoupassport_stagiaire'); 
+            $table->integer('cinoupassport_stagiaire')->unique(); 
            // $table->integer('passport'); 
             $table->string('niveauetude');
             $table->string('specialite');
@@ -27,8 +27,8 @@ class CreateStagiairesTable extends Migration
             $table->string('adresse'); 
             $table->numeric('telephone');
               //Relation
-              $table->object('demandeStages'); 
-
+              $table->array('demandeStages');
+             // $table->object('demandeStages');
 
               //Relation2
               $table->array('traveaux'); 

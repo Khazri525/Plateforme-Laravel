@@ -22,8 +22,11 @@ class CreateSujetStagesTable extends Migration
             $table->string('nom_dept');
             $table->string('typestage');
             $table->string('etatsujet');
-            $table->string('periode');
-           
+            // $table->string('stusujet');
+            $table->string('periode'); 
+
+            //Relation 
+            $table->integer('matricule_sj'); 
             $table->timestamps();
         });
     }

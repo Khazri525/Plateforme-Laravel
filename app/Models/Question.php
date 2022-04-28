@@ -4,18 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\Model;
-
 use App\Models\Reponse ;
 use App\Models\Test;
 
-class Question extends Model
+
+
+
+
+class Question extends Model 
 {
     use HasFactory;
-    public function getReponses()
-    {
-
+    public static function reponses() {
         return $this->embedsMany(Reponse::class);
-    } 
+    }
     protected $fillable = [
 
         'question',
@@ -23,11 +24,8 @@ class Question extends Model
         'duree',
         'etat',
         'points',
-        'repA',
-        'repB',
-        'repC',
-        'repD',
-        'repcorrecte?'
+        'réponses',
+       
         
        
         
@@ -35,4 +33,9 @@ class Question extends Model
     public static function test() {
         return $this->embedsOne(Test::class);
     }
+
 }
+
+
+
+

@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\Model;
-
 use App\Models\Question;
+
 class Test extends Model
 {
     use HasFactory;
-
     protected $fillable = [
 
         'titre',
@@ -24,6 +23,8 @@ class Test extends Model
         
     ];
     public static function questions() {
-        return $this->embedsMany(Questions::class);
+        return $this->embedsMany(Question::class);
     }
+
 }
+

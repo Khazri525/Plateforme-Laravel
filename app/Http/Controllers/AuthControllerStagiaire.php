@@ -42,7 +42,7 @@ class AuthControllerStagiaire extends Controller
             'telephone'=>'required|digits:8',
             'datenaissance'=>'required|date',
             'adresse'=> 'required|string|max:50',
-            'cinoupassport_stagiaire'=> 'unique:stagiaires,cinoupass_stagiaire', //digits:8|
+            'cinoupassport_stagiaire'=> 'required|unique:stagiaires,cinoupass_stagiaire', //digits:8|
             //'passport'=> 'digits:11|unique:stagiaires,passport',
             'niveauetude'=>'required|string',
             'specialite'=>'required|string',
@@ -53,10 +53,18 @@ class AuthControllerStagiaire extends Controller
 
         if($validator->fails()){
             return response()->json([
-                'status'=>400,
+                'status'=>422,
                 'validation_errors'=>$validator->messages(),
+               // 'Erreur! Vérifier les Champs '
             ]);
         }
+        // else if($request->cinoupassport_stagiaire){
+        //     return response()->json([
+        //         'status'=>500,
+        //         'uni_errors'=>$validator->messages(),
+        //        // 'Erreur! Cin ou Passport déjà existe'
+        //     ]);
+        // }
         else {
 
        
@@ -84,6 +92,7 @@ class AuthControllerStagiaire extends Controller
               
            //Relation  
            'demandeStages'=> [],
+          
 
 
            //Relation2
@@ -259,7 +268,7 @@ public function update_profile (Request $request){
 public function identifier(Request $request) {
     $validator = Validator::make($request->all(),[
         'email'=> 'required|email|unique:stagiaires,email',
-        'cinoupassport_stagiaire'=> 'unique:stagiaires,cinoupass_stagiaire', 
+        'cinoupassport_stagiaire'=> 'required|unique:stagiaires',// cinoupass_stagiaire
         'niveauetude'=>'required|string',
 
     ]);

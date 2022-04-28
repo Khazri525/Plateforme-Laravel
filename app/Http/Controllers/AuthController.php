@@ -107,6 +107,7 @@ class AuthController extends Controller
            
             'validation_errors' => $validator->messages() ,
             'status'=>422,
+           
             ]
             
         );
@@ -130,8 +131,12 @@ class AuthController extends Controller
         'departement'=>$request->departement,
       
 
+        //Relation
+        'sujetsEn'=>[],
+
          
       ]);
+
 //Relation
       $departement= Departement::where('nom_dept' , $request->departement)->push(
           ['users'=>[$user->id , $user->nom  , $user->prenom ,$user->role] ]);

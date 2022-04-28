@@ -4,13 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
 use App\Models\Test;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Question;
 
+
 class TestController extends Controller
 {
+   /*  public function index() 
+    {  
+        $test = Test::all();
+        return response()->json([
+            'status'=>200,
+            'test'=>$test,
+        ]);
+    } */
+
     public function index()
     {   $test = Test::all(); 
         return response()->json([
@@ -19,8 +28,6 @@ class TestController extends Controller
             
         ]);
     }
-
-
     public function store(Request $request)
     {   
       
@@ -48,7 +55,8 @@ class TestController extends Controller
         'niveautest'=>$request['niveautest'],
         'duree'=>$request['duree'],
         'note'=>$request['note'],
-        'questions' => []
+        'questions' => [],
+        'réponses' => []
        
        ]);
         
@@ -60,5 +68,4 @@ class TestController extends Controller
         
     }
     }
-
 }

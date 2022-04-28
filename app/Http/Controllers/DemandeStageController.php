@@ -86,7 +86,7 @@ class DemandeStageController extends Controller
                 $finalName = time(). '_' . $filename ;
                 $request->file('cv')->storeAs('public/Upload/Cvs' , $finalName );
                 $demande->cv='public/Upload/Cvs/'.$finalName;
-                } 
+          } 
                 $demande->save();
  
           /*   $demande = DemandeStage::create([
@@ -103,7 +103,8 @@ class DemandeStageController extends Controller
 
            
                 $cin_demande= Stagiaire::where('cinoupassport_stagiaire' , $request->cinoupassport_demande)->push(
-                    ['demandeStages'=>[$demande ->typestage,$demande ->nom_dept ,$demande ->cv] ]);
+                    ['demandeStages'=>[$demande ->_id, $demande ->typestage,$demande ->nom_dept ,$demande ->cv] ]);
+                
             //.Relation
 
 
