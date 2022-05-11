@@ -15,8 +15,6 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Departement;
 use App\Models\SujetStage;
 
-
-use App\Models\Sujet;
 use App\Notifications\ResetPasswordNotification;
 
 
@@ -51,23 +49,29 @@ class User  extends Authenticatable
 
 
         //Relation
-        'sujetsEn',
+      //  'sujetsEn',
+
+           //relation avec travaux
+           'Sujets',
+        //
+        'premlog',
+
 
 
        
     ];
-    
+       //Relation
+       public  function sujets(){
+        return $this->embedsMany(SujetStage::class);
+        
+     } 
     //relation
     public static function departements(){
         return $this->embedsOne(Departement::class);
     }
 
 
-      //relation
-      public static function sujetsEn(){
-        return $this->embedsMany(SujetStage::class);
-    }
-
+    
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -3,10 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthControllerStagiaire;
 //use App\Http\Controllers\ForgotPasswordController;
 //use App\Http\Controllers\ResetPasswordController;
 
-
+use App\Http\Controllers\DossierStageController;
 use App\Http\Controllers\CompteController;
 use App\Http\Controllers\DepartementController;
 
@@ -14,7 +15,7 @@ use App\Http\Controllers\DemandeStageController;
 
 use App\Http\Controllers\SujetStageController;
 
-use App\Http\Controllers\AuthControllerStagiaire;
+use App\Http\Controllers\NoteController;
 
 use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -57,28 +58,40 @@ Route::post('refuser-demande', [MailController::class, 'refuser']);
 //Route::put('/modifier-profile', [AuthController::class, 'update_profile']);
 
 //Demande de stage
-Route::get('/afficher-demandes-stagiaires',[DemandeStageController::class, 'index_demande_stagiaire']);
-// Route::post('/ajouter-demande-stage',[DemandeStageController::class,'store']);
+//Route::get('/afficher-demandes-stagiaires',[DemandeStageController::class, 'index_demande_stagiaire']);
+ Route::post('ajouter-demande-stage/{id}',[DemandeStageController::class,'store']);
 Route::get('/afficher-demandes-stages',[DemandeStageController::class, 'index']);
 Route::delete('supprimer-demandes-stages/{id}', [DemandeStageController::class, 'destroy']);
 Route::post('/ajouter-demande-stage',[DemandeStageController::class,'store']); 
 //.Demande de stage 
 
 //Sujet de stage
-Route::post('/ajouter-sujet-stage',[SujetStageController::class,'store']);
+Route::post('ajouter-sujet-stage/{id}',[SujetStageController::class,'store']);
 Route::delete('/supprimer-sujet/{id}', [SujetStageController::class, 'destroy']);
 Route::get('/find-sujet/{id}', [SujetStageController::class, 'show']);
 Route::put('/modifier-sujet/{id}', [SujetStageController::class, 'update']);
 Route::get('/afficher-sujets-stages',[SujetStageController::class,'index']);
 //.Sujet de stage
-
+//note
+Route::post('ajouter-note',[NoteController::class,'store']);
+//note
+Route::post('ajouter-sujet-stage/{id}',[SujetStageController::class,'store']);
 
 
 //déposer travail / rapport / bilan
-Route::post('/deposer-travail',[TravailController::class,'store']); 
-Route::post('/deposer-rapport',[RapportController::class,'store']); 
-Route::post('/deposer-bilan',[BilanController::class,'store']); 
+Route::post('deposer-travail/{id}',[TravailController::class, 'store']); 
+//Route::get('/get-all-travail',[TravailController::class,'get_all']); 
+Route::post('deposer-rapport/{id}',[RapportController::class,'store']); 
+Route::post('deposer-bilan/{id}',[BilanController::class,'store']); 
 //.déposer travail / rapport / bilan
+
+//dossier de stage
+Route::post('ajouter-dossier-stage/{id}',[DossierStageController::class,'ajouterDossier']);
+Route::get('dossiers',[DossierStageController::class,'index']);
+Route::put('/valide-dossier/{id}', [DossierStageController::class, 'valideDoss']);
+Route::put('/invalide-dossier/{id}', [DossierStageController::class, 'invalideDoss']);
+
+Route::get('/getAllTravail', [TravailController::class, 'getAll']);
 
 
 //Afficher Tous Stagiaire
@@ -103,7 +116,7 @@ Route::put('/modifier-profile', [AuthController::class, 'update_profile']);
 // Public routes
 //Auth utilisateurs
 Route::post('register', [AuthController::class, 'register']);
-//Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
 //Auth stagiaire
@@ -245,10 +258,10 @@ Route::put('/modifier-sujet/{id}', [SujetStageController::class, 'update']); */
 //Route::post('/reset-password', [NewPasswordController::class, 'reset']);
 
 
-Route::post('/login', [AuthController::class, 'login'])->name('login');
+//Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
- Route::group(['middleware' => ['auth:sanctum' ]], function () {
+ Route::group(['middleware' => ['auth:sanctum' ]] , function () {
 Route::get('checkingAuthenticated', [AuthController::class, 'incheck']);
 
   Route::get('profile', [AuthController::class, 'profile']);
@@ -264,6 +277,10 @@ Route::get('checkingAuthenticated', [AuthController::class, 'incheck']);
 });
 
 
+
+
+
+//
 
 
 
@@ -297,4 +314,6 @@ Route::get('events',[EventController::class,'index']);
 Route::delete('event/{id}',[EventController::class, 'destroy']);
 Route::put('event/{id}',[EventController::class, 'update']);
 Route::post('event',[EventController::class, 'store']); 
-Route::get('event/{id}', [EventController::class, 'show']); 
+Route::get('event/{id}', [EventController::class, 'show']);
+
+

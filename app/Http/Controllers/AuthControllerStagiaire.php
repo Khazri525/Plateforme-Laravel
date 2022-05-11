@@ -42,7 +42,7 @@ class AuthControllerStagiaire extends Controller
             'telephone'=>'required|digits:8',
             'datenaissance'=>'required|date',
             'adresse'=> 'required|string|max:50',
-            'cinoupassport_stagiaire'=> 'required|unique:stagiaires,cinoupass_stagiaire', //digits:8|
+            'cinoupassport_stagiaire'=> 'required|unique:stagiaires,cinoupassport_stagiaire', //digits:8|
             //'passport'=> 'digits:11|unique:stagiaires,passport',
             'niveauetude'=>'required|string',
             'specialite'=>'required|string',
@@ -84,19 +84,27 @@ class AuthControllerStagiaire extends Controller
             'niveauetude'=>$request->niveauetude,
             'specialite'=>$request->specialite,
             'filiere'=>$request->filiere,
+             'etatSt'=>'etudiant',
+             //role
+             'role'=> 'stagiaire',
 
+            //relation avec dossier de stage
+            'DossierStage' => $request->DossierStage,
 
-            //role
-            'role'=> 'stagiaire',
-           
+            //relation avec rapport
+            'Rapport'=> $request->Rapport,
+
+             //relation avec bilan
+             'Bilan'=> $request->Bilan,
+            
+             
               
-           //Relation  
-           'demandeStages'=> [],
+            //relation avec demande de stage
+            'DemandeStage'=> $request->DemandeStage,
           
-
-
-           //Relation2
-           'travaux'=>[],
+            'Traveaux'=> $request->Traveaux,
+              
+         
         
             
         ]);
@@ -153,9 +161,12 @@ public function login (Request $request) {
             $response = ['token' => $token];
             return response()->json(
                 ['message' => 'Bienvenu!',
+                'id'=>$stagiaire->_id,
                 'access_token' => $token, 
                 'token_type' => 'Bearer',
                 'username' => $stagiaire->name,
+                'etatSt'=> $stagiaire->etatSt, 
+                'dossiervalideSt'=> $stagiaire->dossiervalideSt,
                 'status'=>200,
                
                 ] );

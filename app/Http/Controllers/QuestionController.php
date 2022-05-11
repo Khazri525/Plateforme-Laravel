@@ -155,6 +155,7 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+  
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(),[
@@ -163,7 +164,11 @@ class QuestionController extends Controller
             'duree'=> 'required',
             'points'=> 'required',
             'etat'=> 'required',
-            
+            'repA'=> 'string|image|mimes:jpeg,png,jpg|max:2048',
+            'repB'=> 'string|image|mimes:jpeg,png,jpg|max:2048',
+            'repc'=> 'string|image|mimes:jpeg,png,jpg|max:2048',
+            'repD'=> 'string|image|mimes:jpeg,png,jpg|max:2048',
+            'repcorrecte'
         ]);
         if($validator->fails()){
             return response()->json(
@@ -180,7 +185,7 @@ class QuestionController extends Controller
                  $question->duree = $request->duree;
                  $question->points=$request->points;
                  $question->etat = $request->etat; 
-          /*      $question->update($request->all());    */
+         
                 $question->save();
 
                  return response()->json(
@@ -201,7 +206,6 @@ class QuestionController extends Controller
     
        
     }  
-
     /**
      * Remove the specified resource from storage.
      *

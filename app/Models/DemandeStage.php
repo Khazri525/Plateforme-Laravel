@@ -7,6 +7,7 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 //Relation
 use App\Models\DemandeStage;
+use App\Models\Stagiaire;
 
 class DemandeStage extends Model
 {
@@ -15,7 +16,7 @@ class DemandeStage extends Model
     protected $fillable = [
        // 'niveauetude',
         //'cin_demande',
-        'cinoupassport_demande',
+       // 'cinoupassport_demande',
         'typestage',
         'nom_dept',
         'cv',
@@ -26,10 +27,11 @@ class DemandeStage extends Model
     
 
 
-      //Relation 
-      public static function cinoupassport_demandes(){
-        return $this->embedsOne(Stagiaire::class);
-    }
+   
+    //relation dossier avec stagiaire
+    public function getstagiaire() {
+      return $this->embedsOne(Stagiaire::class);
+      }
 
 } 
 

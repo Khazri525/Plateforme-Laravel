@@ -87,15 +87,16 @@ class AuthController extends Controller
      $validator = Validator::make($request->all(),[
          'nom'=>'required|string|min:3|max:20 ',
          'prenom'=>'required|string|min:3|max:20 ',
-         'email'=>'required|email|unique:users,email ',
+         'email'=>'required|email|unique:users,email',
          'numTel'=>'required|numeric',
          'datenaissance'=>' required|date',
-         'matricule'=>'required|numeric  ',
+         'matricule'=>'required|numeric|unique:users,matricule',
           'role'=>'required ',
 
           'departement'=>'required ',
 
          'password'=>'required|string|confirmed|min:5',
+       
 
 
          
@@ -132,14 +133,24 @@ class AuthController extends Controller
       
 
         //Relation
-        'sujetsEn'=>[],
+       // 'sujetsEn'=>[],
+
+
+
+        //--
+        'premlog'=>'oui',
+
+
+        //Relations
+        'Sujets'=> $request->Sujets,
+              
 
          
       ]);
 
 //Relation
-      $departement= Departement::where('nom_dept' , $request->departement)->push(
-          ['users'=>[$user->id , $user->nom  , $user->prenom ,$user->role] ]);
+    /*   $departement= Departement::where('nom_dept' , $request->departement)->push(
+          ['users'=>[$user->id , $user->nom  , $user->prenom ,$user->role] ]); */
 //.Relation
       $token = $user->createToken($user->mail.'_auth_token')->plainTextToken;
 
@@ -230,6 +241,11 @@ class AuthController extends Controller
         ]);
     }
   //create token
+
+ 
+
+
+
     if($user->role == 'encadrant')
     {
         $role='encadrant';
@@ -259,6 +275,7 @@ else if($user->role == 'coordinateur')
 
 
 
+
    
 
 
@@ -271,14 +288,16 @@ else if($user->role == 'coordinateur')
         'token_type' => 'Bearer',
         'username' => $user->nom,
         'lastname' => $user->prenom,
+      
        
         'id' => $user->id,
         'status'=>200,
         'role'=>$role,
+         
 
-     
-
-       
+        'premlog'=>$user->premlog,
+        
+   
 
         ] );
 
@@ -289,7 +308,42 @@ else if($user->role == 'coordinateur')
 
 
 
+public function resetmdp(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(),[
+            'password' => 'required|string|min:8|confirmed'
+        ]);
 
+        if ($validator->fails())
+        {
+            return response()->json(
+                ['validation_errors' => $validator->messages(),
+                 'status'=>422,
+            ]);
+        }
+        else{
+                $user=User::find($id);
+                if(Hash::check($request['password'], $user->password)){
+
+                //    $utilisateur->nom = $request->nom;
+                //    $utilisateur->save();
+                    
+                   return response()->json([
+                       'status'=>402,
+                       'message'=>'Même mot de passe !'
+                   ]);
+                }
+                else{
+                    $user->password = bcrypt($request['password']);
+                    $user->premlog = 'non';
+                    $user->save();
+                    return response()->json([
+                        'status'=>200,
+                        'message'=>'Mot de passe changé !'
+                    ]);
+                }
+        }
+    }
  //------------------------------------------------test
 
 

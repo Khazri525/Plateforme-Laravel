@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Bilan;
 
+use App\Models\Stagiaire;
+
 use Validator;
 
 
@@ -13,7 +15,7 @@ class BilanController extends Controller
 {
 
     
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
       $validator = Validator::make($request->all(),[
        // 'bfile'=>'file|mimes:pdf,docx ',
@@ -42,17 +44,12 @@ class BilanController extends Controller
              $bilan->bfile='public/Upload/Bilans/'.$finalName;
              } 
 
+             $insert_bilan_stagiaire= Stagiaire::where('_id', '=', $id)->update(['Bilan' => ['_id' => $id  ,'bfile'=> $bilan->bfile  ] ]);
+
              $bilan ->save();
             
     
 
-              /*  $travail = Travail::create([
-                  'bfile' => 'public/Traveaux/'.$finalName,
-                   'description'=> $request->description,
-                  
-                   
-                ]); */
-           
                 return response()->json(
                     ['message' => 'Bilan déposé avec succès',
                     'status'=>200,

@@ -15,7 +15,7 @@ class CreateBilansTable extends Migration
     {
         Schema::create('bilans', function (Blueprint $table) {
             $table->id();
-            $table->string('rfile')->nullable();
+            $table->string('bfile')->nullable();
             $table->timestamps();
         });
     }

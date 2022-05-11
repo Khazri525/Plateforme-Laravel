@@ -28,7 +28,14 @@ class CreateUsersTable extends Migration
             $table->string('departement');
 
             //Relation
-            $table->array('sujetsEn');
+           // $table->array('sujetsEn');
+
+            //Relation
+            $table->array('Sujets');
+            
+              
+            //--
+            $table->string('premlog');
           
             $table->string('password');
             $table->string('email')->unique();

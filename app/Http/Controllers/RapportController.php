@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Rapport;
-
+use App\Models\Stagiaire;
 use Validator;
 
 
 class RapportController extends Controller
 {
     
-    public function store(Request $request)
+    public function store(Request $request , $id)
     {
       $validator = Validator::make($request->all(),[
-       // 'rfile'=>'required|file|mimes:pdf,docx ',
+        'filerapport'=> 'required' , //|image|mimes:pdf,docx ',  //'required|image|mimes:pdf,xlx,csv|max:2048',
       // 'description'=>'string|max:200 ',
       
      ]);
@@ -29,17 +29,29 @@ class RapportController extends Controller
 
        else{    
          $rapport = new Rapport;
-         // $rapport->description =$request->description;
-          
-            if($request->hasFile('rfile')){
-             $file = $request->file('rfile');
+        //  $rapport->description =$request->description;
+     /*      
+            if($request->hasFile('filerapport')){
+             $file = $request->file('filerapport');
              $filename = $file->getClientOriginalName();
              $extension = $file->getClientOriginalExtension();
              
              $finalName = time(). '_' . $filename ;
-             $request->file('rfile')->storeAs('public/Upload/Rapports' , $finalName );
+             $request->file('filerapport')->storeAs('public/Upload/Rapports' , $finalName );
              $rapport->rfile='public/Upload/Rapports/'.$finalName;
-             } 
+             }  
+ */
+   if($request->file('filerapport')){      
+       $filenameWithExt = $request->file('filerapport')->getClientOriginalName();
+       $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+       $extension = $request->file('filerapport')->getClientOriginalExtension();
+       $fileNameToStore= $filename.'_'.time().'.'.$extension;
+       $path = $request->file('filerapport')->storeAs('public/Upload/Rapports' , $fileNameToStore);
+       
+
+
+         }                        
+$insert_rapport_stagiaire= Stagiaire::where('_id', '=', $id)->update(['Rapport' => ['_id' => $id  ,'rfile'=> $rapport->rfile  ] ]);
 
              $rapport->save();
             

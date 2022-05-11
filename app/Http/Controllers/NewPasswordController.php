@@ -56,22 +56,9 @@ class NewPasswordController extends Controller
             'email' => 'required|email',
         ]);
 
-
-        if($request->validate->email->fails()){
-            return response([
-                'status'=> 422,
-                'validation_errors' => $request->validate->email->messages() ,
-                'message' =>'Vérifier votre Email !'
-               
-               
-                ]
-                
-            );
-    
-         }
    
 
-        $user =User::where('email',$request->email)->first();
+        $user =User::where('email',$request->email )->first();
         if($user){
             $status = Password::sendResetLink(
             $request->only('email')
@@ -318,24 +305,29 @@ public function UresetPassword(Request $request)
         $request->only('email', 'password', 'password_confirmation', 'token'),
         function ($user) use ($request) {
             $user->forceFill([
-                'password' => Hash::make($request->password),
-                'remember_token' => Str::random(60),
+                'password' => $request->password, //Hash::make($request->password),
+                'remember_token' => Str::random(200),
+                'premlog'=>'non',
+                
             ])->save();
 
             $user->tokens()->delete();
 
             event(new PasswordReset($user));
+            
+          
         }
     );
 
     if ($status == Password::PASSWORD_RESET) {
-    
-
+        
         return response()->json(
             [
+               
                 'status'=>200,
                 'message'=> 'Mot de passe utilisateur réinitialisé avec succès',
-                
+                'premlog' => 'non',
+               
             ]
 
         );
@@ -345,6 +337,7 @@ public function UresetPassword(Request $request)
         'status'=>500,
         // 'message'=> __($status)
         'message'=>'utililisateur avec cet email non existe',
+
     ]);
 
 }

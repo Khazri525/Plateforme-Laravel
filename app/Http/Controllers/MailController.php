@@ -17,22 +17,37 @@ class MailController extends Controller
 
 
 public function accepter(Request $request){
-
+ 
+     
     $data=[
           
           'name'=>$request->name,
           'prenom'=>$request->prenom,
-          'email'=>$request->email
-    ];
+          'email'=>$request->email,
+          // 'etatSt'=>'stagiaire_accepte_p',
+         
+         
+    ]; 
+
+ 
     
    
     try{
        // Mail::mailer('smtp')->to($stagiaire->email)->send( new MailAcceptationStagiaire ($stagiaire));receiver@gmail.com
           Mail::to($request->email)->send(new MailAcceptationStagiaire ($data));
           //return 'Email Envoyéé';
+
+       $stagiaire = Stagiaire::find($request->email);
+          if($stagiaire){
+                $stagiaire->update($request->etatSt == 'stagiaire_accepte_p');
+                $stagiaire->save();
+           }  
+          
+    
    return response()->json([
              'status'=>200,
              'message '=> 'Email Acceptation du stagiaire envoyé avec succès',
+            // 'etatSt'=> 'stagiaire_accepte_p',
 
         ],200);
     }

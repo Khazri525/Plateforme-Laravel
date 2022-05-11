@@ -10,10 +10,13 @@ use Jenssegers\Mongodb\Eloquent\Model as EloquentModel;
 
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\DossierStage;
+use App\Models\Rapport;
+use App\Models\Bilan;
+use App\Models\Travail;
+use App\Models\DemandeStage;
 
 
-
-//Relation
 use App\Models\Stagiaire;
 
 use App\Notifications\ResetPasswordNotification;
@@ -25,6 +28,7 @@ class Stagiaire extends EloquentModel
 
 
     protected $fillable = [
+        
         'name',
         'prenom',
         'datenaissance',
@@ -37,26 +41,68 @@ class Stagiaire extends EloquentModel
         'adresse',
         'telephone',
         'password',
-
+         'etatSt',
      
-         //Relation
-         'demandesStages',
+         //relation avec demande de stage
+         'DemandeStage',
 
-         //Relation
-         'travaux',
+
+
+        //relation avec travaux
+          'Traveaux',
+       
+
+        
+        //relation avec dossier de stage
+         'DossierStage',
+
+        //relation avec rapport
+        'Rapport',
+
+          //relation avec bilan
+          'Bilan',
        
        
+
+
+
+          //
+         'dossiervalideSt',
         
     ];
 
     //Relation
-    public static function demandeStages(){
-        //return $this->embedsMany(DemandeStage::class);
-        return $this->embedsMany(DemandeStage::class);
+    public function getdemandeStage() {
+        return $this->embedsOne(DemandeStage::class);
+    }
+
+
+       //Relation
+    public  function traveaux(){
+        return $this->embedsMany(Travail::class);
         
      } 
   
 
+     //relation avec dossier de stage
+
+     public function getdossier() {
+        return $this->embedsOne(DossierStage::class);
+    }
+
+
+     //relation avec rapport
+
+     public function getrapport() {
+        return $this->embedsOne(Rapport::class);
+    }
+
+    //relation avec bilan
+
+    public function getbilan() {
+            return $this->embedsOne(Bilan::class);
+        }
+    
 
     /**
      * The attributes that should be hidden for serialization.

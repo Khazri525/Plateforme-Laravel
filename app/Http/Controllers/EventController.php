@@ -68,7 +68,9 @@ class EventController extends Controller
     } 
 
 
-    public function destroy(event $event ){
+    public function destroy($event){
+
+    $event = Event::find($id);
        
       $event->delete();     
       return response()->json([
@@ -80,7 +82,7 @@ class EventController extends Controller
     }
     
 
-    public function show(event $event){
+    public function show($event){
       
 
         return response()->json([

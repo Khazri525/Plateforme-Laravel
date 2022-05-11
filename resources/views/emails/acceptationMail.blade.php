@@ -12,7 +12,14 @@
         <p>Bonjour {{ $data['name']}} - {{ $data['prenom']}}</p>
         <p>Votre Email {{ $data['email']}} </p>
         <p >Vous étes accépté comme un stagiaire chez Topnet</p>
-        <a href="https://www.topnet.tn/">Topnet </a>
+        <a href="https://www.topnet.tn/">Déposer Dossier </a>
+
+
+
+
+        <a href="http://localhost:3000/login-stagiaire">connecter pouraccéder à votre interface  </a>
+
+
  
 </body>
 </html>

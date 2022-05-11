@@ -23,7 +23,7 @@ class SujetStageController extends Controller
 
 
        //Ajouter
-       public function store(Request $request)
+       public function store(Request $request , $id)
        {
            $validator = Validator::make($request->all(),[
                'sujet'=>'required',
@@ -36,7 +36,7 @@ class SujetStageController extends Controller
                //'etatsujet'=>'required',
 
                //Relation
-               'matricule_sj'=>'unique:sujetsEn,matricule_sj',
+             //  'matricule_sj'=>'unique:sujetsEn,matricule_sj',
                
                
            ]);
@@ -66,7 +66,7 @@ class SujetStageController extends Controller
               // 'stusujet'=>'Active',
 
               //Relation
-               'matricule_sj'=> $request->matricule_sj,
+              // 'matricule_sj'=> $request->matricule_sj,
 
 
 
@@ -76,12 +76,12 @@ class SujetStageController extends Controller
                
                
             ]);
+                     //Relation 
+            $insert_sujets = User::where('_id', '=', $id)->push(['Sujets' => ['_id' => $id  ,'sujet'=> $sujet->sujet,'technologies'=> $sujet->technologies ] ]);
 
+                                                    
       //.Relation
 
-      $matricule_en= User::where ('maricule', $request->matricule_sj)->push(
-        ['sujetsEn'=>[ $sujet ->sujet,$sujet ->technologies ,$sujet ->description ] ]);
-    
         //.Relation
    
             return response()->json(
@@ -95,6 +95,10 @@ class SujetStageController extends Controller
 
 
 
+
+
+
+       
 
     //Delete
     public function destroy($id){
@@ -113,6 +117,12 @@ class SujetStageController extends Controller
             ]);
         }
     } 
+
+
+
+
+
+
 
 
 
@@ -162,7 +172,7 @@ class SujetStageController extends Controller
             'periode'=>'required',
             'etatsujet'=>'required',
            // 'stusujet'=>'required',
-           'matricule_sj'=>'required',
+          // 'matricule_sj'=>'required',
             
             
            

@@ -25,15 +25,15 @@ class SujetStage extends Model
 
 
         //Relation
-        'matricule_sj',
+       // 'matricule_sj',
      
     ];
 
     
-      //Relation 
-      public static function matricule_sjs(){
-        return $this->embedsOne(User::class);
-    }
+        //relation dossier avec utilisateur
+        public function getuser() {
+            return $this->embedsOne(User::class);
+            }
 
 
 

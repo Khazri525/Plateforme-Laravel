@@ -5,17 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\Model;
 use App\Models\Stagiaire;
-class Bilan extends Model
+class DossierStage extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'bfile',
-        
+     
+        'cinfile',
+        'convfile',
+        'cvfile',
+        'lettfile',
+    
     
     ];
-
-      
-    //relation dossier avec stagiaire
+//relation dossier avec stagiaire
     public function getstagiaire() {
         return $this->embedsOne(Stagiaire::class);
         }

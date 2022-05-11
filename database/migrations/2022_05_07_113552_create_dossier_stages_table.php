@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRapportsTable extends Migration
+class CreateDossierStagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateRapportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rapports', function (Blueprint $table) {
+        Schema::create('dossier_stages', function (Blueprint $table) {
             $table->id();
-            $table->string('filerapport')->nullable();
+            $table->string('cinfile')->nullable();
+            $table->string('convfile')->nullable();
+            $table->string('cvfile')->nullable();
+            $table->string('lettfile')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class CreateRapportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rapports');
+        Schema::dropIfExists('dossier_stages');
     }
 }

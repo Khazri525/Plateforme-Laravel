@@ -40,7 +40,7 @@ class DemandeStageController extends Controller
       } */
  
        //Ajouter
-       public function store(Request $request)
+       public function store(Request $request, $id)
        {
            $validator = Validator::make($request->all(),[
                //'niveauetude'=>'required',
@@ -49,7 +49,7 @@ class DemandeStageController extends Controller
                //'cv'=>'required|file',
                //'cv'=>'required',
                //'cin_demande'=>'required',
-              'cinoupassport_demande'=> 'unique:demande_stages,cinoupassport_demande', 
+             // 'cinoupassport_demande'=> 'unique:demande_stages,cinoupassport_demande', 
                
               
                
@@ -73,7 +73,7 @@ class DemandeStageController extends Controller
            // $demande ->niveauetude =$request->niveauetude;
             $demande ->typestage =$request->typestage;
             $demande ->nom_dept =$request->nom_dept;
-            $demande ->cinoupassport_demande =$request->cinoupassport_demande;
+          //  $demande ->cinoupassport_demande =$request->cinoupassport_demande;
             $demande ->cv =$request->cv;
            
          
@@ -99,12 +99,14 @@ class DemandeStageController extends Controller
                
             ]); */
    
+                                       
+            $insert_demndeStage_stagiaire= Stagiaire::where('_id', '=', $id)->update(['DemandeStage' => ['_id' => $id  ,'typestage'=>  $demande ->typestage ,'nom_dept'=>  $demande ->nom_dept ,'cv'=>  $demande ->cv ] ]);
 
 
-           
+           /* 
                 $cin_demande= Stagiaire::where('cinoupassport_stagiaire' , $request->cinoupassport_demande)->push(
                     ['demandeStages'=>[$demande ->_id, $demande ->typestage,$demande ->nom_dept ,$demande ->cv] ]);
-                
+                 */
             //.Relation
 
 

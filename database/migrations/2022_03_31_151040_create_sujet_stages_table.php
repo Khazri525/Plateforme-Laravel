@@ -26,7 +26,9 @@ class CreateSujetStagesTable extends Migration
             $table->string('periode'); 
 
             //Relation 
-            $table->integer('matricule_sj'); 
+           // $table->integer('matricule_sj'); 
+
+            
             $table->timestamps();
         });
     }

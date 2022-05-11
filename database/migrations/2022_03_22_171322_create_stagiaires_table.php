@@ -26,14 +26,35 @@ class CreateStagiairesTable extends Migration
             $table->string('filiere');
             $table->string('adresse'); 
             $table->numeric('telephone');
-              //Relation
-              $table->array('demandeStages');
-             // $table->object('demandeStages');
+           
+          
 
               //Relation2
-              $table->array('traveaux'); 
+              $table->array('Traveaux');
+              
+              
+            //////
+            $table->string('etatSt');
+            $table->object('dossierSt');
+            $table->string('dossiervalideSt');
+            $table->string('entretientechSt');
+            $table->string('entretienvalideSt');
+
+
+            //relation avec demande de stage
+            $table->object('DemandeStage');
+            //relation avec dossier de stage
+            $table->object('DossierStage');
+            //relation avec rapport
+            $table->object('Rapport');
+             //relation avec bilan
+             $table->object('Bilan');
+
+
+              //////
             $table->string('password');
             $table->string('password_confirmation');
+
             $table->timestamps();
         });
     }
