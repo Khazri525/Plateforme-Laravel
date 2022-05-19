@@ -18,22 +18,16 @@ class Question extends Model
         return $this->embedsMany(Reponse::class);
     }
     protected $fillable = [
-
         'question',
         'niveau',
         'duree',
         'etat',
         'points',
         'réponses',
-       
-        
-       
-        
     ];
     public static function test() {
         return $this->embedsOne(Test::class);
     }
-
 }
 
 

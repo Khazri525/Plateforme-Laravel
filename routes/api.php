@@ -52,8 +52,9 @@ use App\Http\Controllers\EventController;
 
 //accepter stagiaire
 
-Route::post('accepter-demande', [MailController::class, 'accepter']);
-Route::post('refuser-demande', [MailController::class, 'refuser']);
+Route::put('accepter-demande/{id}', [MailController::class, 'accepterEtu']);
+Route::put('refuser-demande/{id}', [MailController::class, 'refuserEtu']);
+
 //Route::get('/profile', [AuthController::class, 'profile']);
 //Route::put('/modifier-profile', [AuthController::class, 'update_profile']);
 
@@ -124,6 +125,10 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register-stagiaire',[AuthControllerStagiaire::class,'register']);
 Route::post('/login-stagiaire',[AuthControllerStagiaire::class,'login']);
 
+
+
+//score quiz
+Route::put('submit-score/{id}', [AuthControllerStagiaire::class, 'submit_score']);
 
 /* 
 Route::post('ajouter-utilisateur', [AuthUtilisateursController::class, 'register']);
@@ -287,33 +292,86 @@ Route::get('checkingAuthenticated', [AuthController::class, 'incheck']);
 
 
 //Questions
-Route::get('/question', [QuestionController::class, 'index']); 
+/* Route::get('/question', [QuestionController::class, 'index']); 
 Route::get('/allquestion', [QuestionController::class, 'allquestion']);
  Route::get('/getramdom', [QuestionController::class, 'random']); // récuppérer les questions aléatoirement
 Route::get('/question/{id}', [QuestionController::class, 'show']); //récupérer question avec réponse 
 Route::delete('/question/{id}',[QuestionController::class, 'destroy']);
 Route::put('/question/{id}',[QuestionController::class, 'update']);
 Route::post('question',[QuestionController::class, 'store']); 
-Route::get('/question/{question}',[QuestionController::class,'search']);
+Route::get('/question/{question}',[QuestionController::class,'search']); */
 
 //réponses
-Route::get('/reponse', [ReponseController::class, 'index']);
+/* Route::get('/reponse', [ReponseController::class, 'index']);
 Route::get('/reponse/{id}', [ReponseController::class, 'show']);
 Route::put('/reponse/{id}',[ReponseController::class, 'update']);
 Route::delete('/reponse/{id}',[ReponseController::class, 'destroy']);
-Route::post('reponse', [ReponseController::class, 'store']);
+Route::post('reponse', [ReponseController::class, 'store']); */
 
 //test
-Route::post('test',[TestController::class,'store']);
+/* Route::post('test',[TestController::class,'store']);
 Route::get('/test',[TestController::class,'index']);
 
 
-Route::post('identifier/stage',[AuthControllerStagiaire::class,' identifier']);
+Route::post('identifier/stage',[AuthControllerStagiaire::class,' identifier']); */
 //calendrier
 Route::get('events',[EventController::class,'index']);
 Route::delete('event/{id}',[EventController::class, 'destroy']);
 Route::put('event/{id}',[EventController::class, 'update']);
 Route::post('event',[EventController::class, 'store']); 
 Route::get('event/{id}', [EventController::class, 'show']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Questions
+Route::get('/question', [QuestionController::class, 'index']);
+Route::get('/allquestion', [QuestionController::class, 'allquestion']);
+Route::get('/getramdom', [QuestionController::class, 'random']); // récuppérer les questions aléatoirement
+Route::get('/question/{id}', [QuestionController::class, 'show']); //récupérer question avec réponse 
+Route::delete('/question/{id}', [QuestionController::class, 'destroy']);
+Route::put('/question/{id}', [QuestionController::class, 'update']);
+Route::post('question', [QuestionController::class, 'store']);
+Route::get('/question/{question}', [QuestionController::class, 'search']);
+Route::get('/questionTest/{id_test}', [QuestionController::class, 'showByTest']);
+Route::get('/questions/{id_test}', [QuestionController::class, 'getQuestionsByTest']);
+
+//réponses
+Route::get('/reponse', [ReponseController::class, 'index']);
+Route::get('/reponse/{id}', [ReponseController::class, 'show']);
+Route::get('/reponse-question/{id_question}', [ReponseController::class, 'showByQuestion']);
+Route::put('/reponse/{id}', [ReponseController::class, 'update']);
+Route::delete('/reponse/{id}', [ReponseController::class, 'destroy']);
+Route::post('reponse', [ReponseController::class, 'store']);
+
+//test
+Route::post('test', [TestController::class, 'store']);
+Route::get('/test', [TestController::class, 'index']);
+Route::get('/randomTest/{niveau_stagiaire}', [TestController::class, 'random']);
+
+
+Route::post('identifier/stage', [AuthControllerStagiaire::class, 'identifier']);
+
+
+
+
+
+
+
+
+
+
+
 
 

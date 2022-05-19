@@ -19,13 +19,13 @@ class CreateStagiairesTable extends Migration
             $table->string('prenom'); 
             $table->date('datenaissance');
             $table->string('email')->unique();
-            $table->integer('cinoupassport_stagiaire')->unique(); 
+            $table->string('cinoupassport_stagiaire')->unique(); 
            // $table->integer('passport'); 
             $table->string('niveauetude');
             $table->string('specialite');
             $table->string('filiere');
             $table->string('adresse'); 
-            $table->numeric('telephone');
+            $table->string('telephone');
            
           
 
@@ -35,7 +35,7 @@ class CreateStagiairesTable extends Migration
               
             //////
             $table->string('etatSt');
-            $table->object('dossierSt');
+            //$table->object('dossierSt');
             $table->string('dossiervalideSt');
             $table->string('entretientechSt');
             $table->string('entretienvalideSt');

@@ -127,22 +127,7 @@ $insert_dossier_stagiaire= Stagiaire::where('_id', '=', $id)->update(['DossierSt
           
  public function valideDoss (Request $request, $id)
  {
- 
-     /* $validator = Validator::make($request->all(),[
-        'nom_dept'=>'required ',
-        'nom_chef_dept'=>'required|string|max:20 ',
- 
-     ]);
-
-     if($validator->fails()){
-         return response()->json(
-             [ 'validation_errors' => $validator->messages() ,
-               'status'=>422,
-             ]);   
- 
-     } */
-
-          $stagiaire = Stagiaire::find($id);
+       $stagiaire = Stagiaire::find($id);
           if($stagiaire){
  
               //$dept->update($request->all());
@@ -215,5 +200,31 @@ $insert_dossier_stagiaire= Stagiaire::where('_id', '=', $id)->update(['DossierSt
     
  
     }
+
+
+
+
+
+
+
+    
+    //Delete
+    public function destroy($id){
+        $dossier = DossierStage::find($id);
+        if($dossier){
+            $dossier->delete();
+                return response()->json([
+                    'status' =>200,
+                    'message' =>'Dossier de stage supprimée avec succès',
+                ]);
+        }
+        else{
+            return response()->json([
+                'status' =>404,
+                'message' =>'Dossier de stage avec cet ID introuvable',
+            ]);
+        }
+    }
+
 
 }

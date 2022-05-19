@@ -9,18 +9,19 @@
 <body>
 
         <h2>Topnet : Acceptation Votre Demande de Stage</h2>
-        <p>Bonjour {{ $data['name']}} - {{ $data['prenom']}}</p>
-        <p>Votre Email {{ $data['email']}} </p>
-        <p >Vous étes accépté comme un stagiaire chez Topnet</p>
-        <a href="https://www.topnet.tn/">Déposer Dossier </a>
+        <!-- <p>Bonjour {{ $data['name']}} - {{ $data['prenom']}}</p> -->
+        <h2>Bonjour</h2>
+        <!-- <p>Votre Email {{ $data['email']}} </p> -->
+        <p >Vous étes accépté comme un stagiaire chez Topnet</p><br/>
+   
 
 
+        
+        
+        <a href="http://localhost:3000/login-stagiaire">connecter pour accéder à votre interface  et <p>Déposer votre Dossier</p> </a><br/>
 
 
-        <a href="http://localhost:3000/login-stagiaire">connecter pouraccéder à votre interface  </a>
-
-
- 
+         <a href="https://www.topnet.tn/"></a>
 </body>
 </html>
 

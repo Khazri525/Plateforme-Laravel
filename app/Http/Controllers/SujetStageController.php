@@ -171,9 +171,6 @@ class SujetStageController extends Controller
             'typestage'=>'required',
             'periode'=>'required',
             'etatsujet'=>'required',
-           // 'stusujet'=>'required',
-          // 'matricule_sj'=>'required',
-            
             
            
          ]);
@@ -213,8 +210,4 @@ class SujetStageController extends Controller
      
         }
     
-    
-        
-
-
 }

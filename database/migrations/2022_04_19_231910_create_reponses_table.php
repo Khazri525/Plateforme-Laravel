@@ -17,8 +17,6 @@ class CreateReponsesTable extends Migration
             $table->id();
             $table->string('repimage')->nullable();
             $table->string('reptext')->nullable();
-            $table->string('repcorrecte');
-            $table->integer('questions_id');
             $table->timestamps();
         });
     }

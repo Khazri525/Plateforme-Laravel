@@ -9,8 +9,9 @@
 <body>
 
         <h2>Topnet : Refus Votre Demande de Stage</h2>
-        <p>Bonjour {{ $data['name']}} - {{ $data['prenom']}}</p>
-        <p>Votre Email {{ $data['email']}} </p>
+        <!-- <p>Bonjour {{ $data['name']}} - {{ $data['prenom']}}</p> -->
+        <h2>Bonjour</h2>
+        <!-- <p>Votre Email {{ $data['email']}} </p> -->
         <p >Vous étes refusé comme un stagiaire chez Topnet</p>
         <a href="https://www.topnet.tn/">Topnet </a>
  

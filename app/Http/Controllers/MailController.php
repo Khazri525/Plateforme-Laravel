@@ -15,16 +15,15 @@ class MailController extends Controller
     
  //service de formation accepte un stagiaire
 
-
-public function accepter(Request $request){
+/* 
+public function accepter(Request $request , $id){
  
+  
      
     $data=[
           
-          'name'=>$request->name,
-          'prenom'=>$request->prenom,
           'email'=>$request->email,
-          // 'etatSt'=>'stagiaire_accepte_p',
+     
          
          
     ]; 
@@ -35,14 +34,7 @@ public function accepter(Request $request){
     try{
        // Mail::mailer('smtp')->to($stagiaire->email)->send( new MailAcceptationStagiaire ($stagiaire));receiver@gmail.com
           Mail::to($request->email)->send(new MailAcceptationStagiaire ($data));
-          //return 'Email Envoyéé';
 
-       $stagiaire = Stagiaire::find($request->email);
-          if($stagiaire){
-                $stagiaire->update($request->etatSt == 'stagiaire_accepte_p');
-                $stagiaire->save();
-           }  
-          
     
    return response()->json([
              'status'=>200,
@@ -58,21 +50,72 @@ public function accepter(Request $request){
             'errors '=> 'Email Acceptation stagiaire non envoyé réessayer!',
 
        ],500);
-    }    
+    }      
+
+}
+ */
 
 
+
+
+
+
+
+
+
+
+
+ 
+public function accepterEtu(Request $request , $id){
+ 
+  
+    $stagiaire = Stagiaire::find($id);
+    if($stagiaire){
+      $stagiaire->etatSt = 'stagiaire_accepte_p';
+      $stagiaire->save();
+     
+     // try{
+        // Mail::mailer('smtp')->to($stagiaire->email)->send( new MailAcceptationStagiaire ($stagiaire));receiver@gmail.com
+           Mail::to($stagiaire->email)->send(new MailAcceptationStagiaire ($stagiaire));
+ 
+     
+    return response()->json([
+              'status'=>200,
+              'message '=> 'Email Acceptation du stagiaire envoyé avec succès',
+             // 'etatSt'=> 'stagiaire_accepte_p',
+ 
+         ],200);
+    // }
+ /*     
+     catch(\Exception $err){
+         return response()->json([
+             'status'=>500,
+             'errors '=> 'Email Acceptation stagiaire non envoyé réessayer!',
+ 
+        ],500);
+     }     */
+    }
+
+
+    else{
+        return response()->json(
+            [    'status'=>404,
+                'message' =>"Email Acceptation stagiaire non envoyé réessayer!" ,
+              
+            ]);   ;
+     } 
    
-   
-    
+
 
 }
 
-public function refuser(Request $request){
+   
+/* 
+public function refuserEtu(Request $request ,$id){
 
     $data=[
          
-          'name'=>$request->name,
-          'prenom'=>$request->prenom,
+     
           'email'=>$request->email
     ];
     
@@ -80,7 +123,8 @@ public function refuser(Request $request){
     try{
        // Mail::mailer('smtp')->to($stagiaire->email)->send( new MailAcceptationStagiaire ($stagiaire));receiver@gmail.com
           Mail::to($request->email)->send(new MailRefusStagiaire ($data));
-          //return 'Email Envoyéé';
+
+     
    return response()->json([
              'status'=>200,
              'message '=> 'Email Refus du stagiaire envoyé avec succès',
@@ -98,7 +142,55 @@ public function refuser(Request $request){
     }    
 
 
-}
+} */
 
+
+
+
+
+
+
+public function refuserEtu(Request $request , $id){
+ 
+  
+    $stagiaire = Stagiaire::find($id);
+    if($stagiaire){
+      $stagiaire->etatSt = 'stagiaire_accepte_p_non';
+      $stagiaire->save();
+     
+     // try{
+        // Mail::mailer('smtp')->to($stagiaire->email)->send( new MailAcceptationStagiaire ($stagiaire));receiver@gmail.com
+           Mail::to($stagiaire->email)->send(new MailrefusStagiaire ($stagiaire));
+ 
+     
+    return response()->json([
+              'status'=>200,
+              'message '=> 'Email Refus  du stagiaire envoyé avec succès',
+             // 'etatSt'=> 'stagiaire_accepte_p',
+ 
+         ],200);
+    // }
+ /*     
+     catch(\Exception $err){
+         return response()->json([
+             'status'=>500,
+             'errors '=> 'Email Acceptation stagiaire non envoyé réessayer!',
+ 
+        ],500);
+     }     */
+    }
+
+
+    else{
+        return response()->json(
+            [    'status'=>404,
+                'message' =>"Email Refus Acceptation stagiaire non envoyé réessayer!" ,
+              
+            ]);   ;
+     } 
+   
+
+
+}
 
 }

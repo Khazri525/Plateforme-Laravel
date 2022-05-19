@@ -68,6 +68,8 @@ class Stagiaire extends EloquentModel
 
           //
          'dossiervalideSt',
+
+         'score',
         
     ];
 

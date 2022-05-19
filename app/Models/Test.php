@@ -8,6 +8,7 @@ use App\Models\Question;
 
 class Test extends Model
 {
+    
     use HasFactory;
     protected $fillable = [
 
@@ -18,9 +19,6 @@ class Test extends Model
         'duree',
         'questions',
         'note'
-        
-       
-        
     ];
     public static function questions() {
         return $this->embedsMany(Question::class);

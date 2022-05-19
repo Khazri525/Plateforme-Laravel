@@ -18,9 +18,9 @@ class CreateUsersTable extends Migration
             $table->id(); 
             
             $table->string('nom');
-            $table->string('prenom'); 
+            $table->int('prenom'); 
             $table->string('numTel');
-            $table->string('datenaissance');
+            $table->date('datenaissance');
             $table->string('matricule');  
             $table->string('role');
            // $table->string('etat' , ['active' , 'inactive'])->default('active'); 

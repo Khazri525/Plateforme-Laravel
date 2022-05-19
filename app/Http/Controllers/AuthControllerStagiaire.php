@@ -166,6 +166,7 @@ public function login (Request $request) {
                 'token_type' => 'Bearer',
                 'username' => $stagiaire->name,
                 'etatSt'=> $stagiaire->etatSt, 
+                'niveauetude'=> $stagiaire->niveauetude, 
                 'dossiervalideSt'=> $stagiaire->dossiervalideSt,
                 'status'=>200,
                
@@ -215,7 +216,17 @@ public function login (Request $request) {
 
 
 
-
+public function submit_score (Request $request, $id){
+    $stagiaire = Stagiaire::where('_id', '=', $id)->first();
+    $stagiaire->update($request->all());
+    return response()->json(
+        [
+            'status' => 200,
+            'message' => 'Score ajouté avec succée',
+        ]
+    );
+    
+}
 
 
 //modifier profile
@@ -286,7 +297,6 @@ public function identifier(Request $request) {
     if($validator->fails()) {
         return response()->json([
             'validation_errors' => $validator->messages(),]);
-        
     }
     else{
         $etudiant= Stagiaire::create([
@@ -294,11 +304,11 @@ public function identifier(Request $request) {
             'cinoupassport_stagiaire'=> $request['cinoupassport_stagiaire'],
             'niveauetude'=>$request['niveauetude'],
         ]);
-        $token = $etudiant->createToken($etudiant->cin.'_Token')->plainTextToken;
+        // $token = $etudiant->createToken($etudiant->cin.'_Token')->plainTextToken;
    return response()->json([
        'status'=>200,
        'cinoupassport_stagiaire'=>$etudiant->cinoupassport_stagiaire,
-       'token'=>$token,
+    //    'token'=>$token,
        'message'=> 'bienvenue au test',
    ]);
       
