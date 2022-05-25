@@ -30,7 +30,7 @@ class CreateStagiairesTable extends Migration
           
 
               //Relation2
-              $table->array('Traveaux');
+           $table->array('Traveaux');
               
               
             //////

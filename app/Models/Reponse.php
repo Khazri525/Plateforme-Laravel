@@ -8,6 +8,7 @@ use App\Models\Question;
 
 class Reponse extends Model
 {
+    //Les attributs de réponse
     use HasFactory;
     protected $fillable = [
 
@@ -18,6 +19,7 @@ class Reponse extends Model
         
     ];
 
+    //Relation avec question
     public static function questions() {
         return $this->embedsOne(Question::class);
     }

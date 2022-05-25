@@ -24,9 +24,8 @@ use App\Notifications\ResetPasswordNotification;
 class Stagiaire extends EloquentModel
 
 {
+    //Les attributs de stagiaire
     use HasFactory, Notifiable, HasApiTokens;
-
-
     protected $fillable = [
         
         'name',
@@ -34,7 +33,6 @@ class Stagiaire extends EloquentModel
         'datenaissance',
         'email',
         'cinoupassport_stagiaire',
-        //'passport',
         'niveauetude',
         'specialite',
         'filiere',
@@ -66,20 +64,20 @@ class Stagiaire extends EloquentModel
 
 
 
-          //
+          //etat dossier de stage
          'dossiervalideSt',
-
+         //note de test
          'score',
         
     ];
 
-    //Relation
+    //Relation avec demande de stage
     public function getdemandeStage() {
         return $this->embedsOne(DemandeStage::class);
     }
 
 
-       //Relation
+       //Relation avec travail
     public  function traveaux(){
         return $this->embedsMany(Travail::class);
         
@@ -127,12 +125,6 @@ class Stagiaire extends EloquentModel
 
     
     
-    public function sendPasswordResetNotification($token)
-    {
-        //https://spa.test   $url = 'http://localhost:3000/U-reset?token=' . $token;
-        $url = 'http://localhost:3000/S-reset/' . $token;
 
-        $this->notify(new ResetPasswordNotification($url));
-    }
 }
 

@@ -5,20 +5,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Validator;
-/* 
-use Illuminate\Support\Facades\Hash;
-
-
-use Auth;
-use Validator;
- */
 
 class CompteController extends Controller
 {
 
-    //CRUD
-
-    //Read All
+    //Retourner la liste des utilisateurs
     public function index()
     {
         $user = User::all();
@@ -46,7 +37,7 @@ class CompteController extends Controller
 
     }else{
      return response()->json(
-         [ 'validation_errors' => 'Utilisateur non existe' , //$validator->messages()
+         [ 'validation_errors' => 'Utilisateur non existe' , 
            'status'=>404,
          ]);   
      
@@ -56,8 +47,7 @@ class CompteController extends Controller
 
 
 
-
-    //Modifier utilisateur
+//Modifier utilisateur
  public function update(Request $request, $id)
 {
 
@@ -73,7 +63,7 @@ class CompteController extends Controller
         'departement'=>'required ',
 
         'etat'=>'required',
-        'password'=>'required|string|confirmed|min:5',
+       // 'password'=>'required|string|confirmed|min:5',
 
     ]);
 
@@ -88,8 +78,6 @@ class CompteController extends Controller
          $user = User::find($id);
          if($user){
 
-            // $compte->update($request->all());
-
             $user->nom = $request->nom;
             $user->prenom= $request->prenom;
             $user->email =$request->email;
@@ -97,12 +85,12 @@ class CompteController extends Controller
             $user->datenaissance =$request->datenaissance;
             $user-> matricule=$request->matricule;
             $user-> role=$request->role;
-            //$user->password = Hash::make($request->password);
+            $user->password = Hash::make($request->password);
      
             $user->etat = $request->etat;
 
             $user->departement = $request->departement;
-            $user->password = $request->password;
+            //$user->password = $request->password;
       
             
             $user->save();
@@ -129,182 +117,7 @@ class CompteController extends Controller
 
 
 
-//Désactiver et Activer un utilisateur
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 
-  //Create
-    public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(),[
-            'nom'=>'required|string|min:3|max:20 ',
-            'prenom'=>'required|string|min:3|max:20 ',
-            'email'=>'required|email|unique:users,email ',
-            'numTel'=>'required|numeric',
-            'datenaissance'=>' required|date',
-            'matricule'=>'required|numeric  ',
-           //'role'=>'required ',
-            'password'=>'required|string|confirmed|min:5',
-    
-        ]);
-
-        if($validator->fails()){
-            return response()->json(
-                [ 'validation_errors' => $validator->messages() ,
-                  'status'=>400,
-                ]);   
-
-        }
-
-        // return Compte::create($request->all());
-
-        $compte = Compte::create([
-            'nom' => $request->nom,
-            'prenom'=> $request->prenom,
-             'email' => $request->email,
-             'numTel'=> $request->numTel,
-            'datenaissance' =>$request->datenaissance,
-            'matricule'=> $request->matricule,
-            'password' => Hash::make($request->password),
-            
-         ]);
-
-
-         
-         $token = $compte->createToken('auth_token')->plainTextToken;
-
-         return response()->json(
-             ['message' => 'compte successfully registered',
-             'access_token' => $token, 
-             'token_type' => 'Bearer',
-             'username' => $compte->nom,
-             'status'=>200,
-             ] );
-
-    }
-
-
-
-
- */
-
-
-
- 
-  //Create
- /*  public function register(Request $request)
-  {
-      $validator = Validator::make($request->all(),[
-          'nom'=>'required|string|min:3|max:20 ',
-          'prenom'=>'required|string|min:3|max:20 ',
-          'email'=>'required|email|unique:users,email ',
-          'numTel'=>'required|numeric',
-          'datenaissance'=>' required|date',
-          'matricule'=>'required|numeric  ',
-         //'role'=>'required ',
-          'password'=>'required|string|confirmed|min:5',
-  
-      ]);
-
-      if($validator->fails()){
-          return response()->json(
-              [ 'validation_errors' => $validator->messages() ,
-                'status'=>400,
-              ]);   
-
-      }
-
-      // return Compte::create($request->all());
-
-      $compte = Compte::create([
-          'nom' => $request->nom,
-          'prenom'=> $request->prenom,
-           'email' => $request->email,
-           'numTel'=> $request->numTel,
-          'datenaissance' =>$request->datenaissance,
-          'matricule'=> $request->matricule,
-          'password' => Hash::make($request->password),
-          
-       ]);
-
-
-       
-       $token = $compte->createToken('auth_token')->plainTextToken;
-
-       return response()->json(
-           ['message' => 'compte successfully registered',
-           'access_token' => $token, 
-           'token_type' => 'Bearer',
-           'username' => $compte->nom,
-           'status'=>200,
-           ] );
-
-  }
-
-
-
-
-
-     */
-
-    //Update
-/*     public function update(Request $request, $id)
-    {
-        $compte = Compte::find($id);
-        $compte->update($request->all());
-        return $compte;
-    } 
- */
-
-
-  
-   
-
-
-   //Search
-   /* public function search($key){
-       return Compte::where('nom' , 'Like',"%$key%")->get();
-   } */
-   
-    //Delete
-   /*  public function destroy($id)
-    {
-        return Compte::destroy($id);
-    }
- */
-
-
-
-/*  
-public function incheck (){
-    return response()->json([
-        'message' => 'You are in' ,
-         'status' =>200
-    ],200);
-}
-
- */
 
     
 }

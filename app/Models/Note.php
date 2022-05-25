@@ -7,6 +7,7 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class Note extends Model
 {
+    //Les attributs de note
     use HasFactory;
     
     protected $fillable = [

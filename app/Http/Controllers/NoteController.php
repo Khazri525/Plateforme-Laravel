@@ -9,7 +9,7 @@ class NoteController extends Controller
 {
     
 
-        //Read All
+        //Retourner la liste notes
         public function index()
         {
             $note = Note::all();
@@ -18,7 +18,7 @@ class NoteController extends Controller
                 'note' =>$note
             ]);
         }
-    
+  //Ajouter note
   public function store(Request $request)
   {
     $validator = Validator::make($request->all(),[

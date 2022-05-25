@@ -8,7 +8,7 @@ use App\Models\Question;
 
 class Test extends Model
 {
-    
+    //Les attributs de test
     use HasFactory;
     protected $fillable = [
 
@@ -20,6 +20,8 @@ class Test extends Model
         'questions',
         'note'
     ];
+
+    //Relation avec question
     public static function questions() {
         return $this->embedsMany(Question::class);
     }

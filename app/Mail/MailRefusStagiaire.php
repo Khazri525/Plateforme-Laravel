@@ -32,9 +32,9 @@ class MailRefusStagiaire extends Mailable
      * @return $this
      */
 
+       //Mail de refus de demande de stage
     public function build()
     {
-      // return $this->from('nourkhazri2@gmail.com')->view('Mails.refus');
        return $this->from('nourkhazri2@gmail.com')->subject(' Refus Demande de Stage')->view('emails.refusMail')->with('data' ,  $this->data);
     }
 }

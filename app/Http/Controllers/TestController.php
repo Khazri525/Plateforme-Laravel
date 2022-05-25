@@ -11,15 +11,8 @@ use App\Models\Question;
 
 class TestController extends Controller
 {
-    /*  public function index() 
-    {  
-        $test = Test::all();
-        return response()->json([
-            'status'=>200,
-            'test'=>$test,
-        ]);
-    } */
-
+   
+    //Retourner la liste Tests
     public function index()
     {
         $test = Test::all();
@@ -30,11 +23,12 @@ class TestController extends Controller
         ]);
     }
 
+    //Retourner aléatoirement les Tests selon niveau d'étude d'un stagiaire d'état étudiant
     public function random($niveau_stagiaire)
     {
         if ($niveau_stagiaire == 'Licence')
             $req = Test::where('niveautest', 'moyen')->get();
-        else if ($niveau_stagiaire == 'BTS' || $niveau_stagiaire == 'bac')
+        else if ($niveau_stagiaire == 'BTS' || $niveau_stagiaire == 'Bac')
             $req = Test::where('niveautest', 'facile')->get();
         else
             $req = Test::where('niveautest', 'difficile')->get();
@@ -50,11 +44,12 @@ class TestController extends Controller
         ]);
     }
 
+
+    //Ajouter test
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'titre' => 'required',
-            'departement' => 'required',
             'niveaustagiaire' => 'required',
             'niveautest' => 'required',
             'duree' => 'required',

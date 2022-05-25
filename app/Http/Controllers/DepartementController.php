@@ -9,7 +9,7 @@ class DepartementController extends Controller
 {
 
 
-      //Read All
+      //Retourner la liste départements
       public function index()
       {
           $dept = Departement::all();
@@ -21,9 +21,7 @@ class DepartementController extends Controller
   
 
 
-
-
-    //Create
+    //Ajouter département
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -44,8 +42,6 @@ class DepartementController extends Controller
 
         else{    
 
-  // return Compte::create($request->all());
-         
         $dept = Departement::create([
             'nom_dept' => $request->nom_dept,
             'nom_chef_dept'=> $request->nom_chef_dept,
@@ -94,7 +90,7 @@ class DepartementController extends Controller
 
 
 
-     //Modifier utilisateur
+     //Modifier département
  public function update(Request $request, $id)
  {
  
@@ -116,11 +112,6 @@ class DepartementController extends Controller
           if($dept){
  
               $dept->update($request->all());
-             //'nom_dept' => $request->nom_dept,
-             //'nom_chef_dept'=> $request->nom_chef_dept,
-            
-            
-
              $dept->save();
            
               return response()->json(
@@ -143,24 +134,7 @@ class DepartementController extends Controller
     
     
 
-    //Delete
-    public function destroy($id){
-        $dept = Departement::find($id);
-        if($dept){
-                $dept->delete();
-                return response()->json([
-                    'status' =>200,
-                    'message' =>'Département supprimée avec succès',
-                ]);
-        }
-        else{
-            return response()->json([
-                'status' =>404,
-                'message' =>'Département avec cet ID introuvable ',
-            ]);
-        }
-    }
-
+  
 
 
 }

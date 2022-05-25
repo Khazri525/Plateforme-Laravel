@@ -10,6 +10,8 @@ use App\Models\User;
 
 class SujetStage extends Model
 {
+
+    //Les attributs de sujet de stage
     use HasFactory;
 
     protected $fillable = [
@@ -20,17 +22,14 @@ class SujetStage extends Model
         'nom_dept',
         'typestage',
         'etatsujet',
-       // 'stusujet',
+
         'periode',
 
-
-        //Relation
-       // 'matricule_sj',
      
     ];
 
     
-        //relation dossier avec utilisateur
+        //relation sujet de stage avec utilisateur
         public function getuser() {
             return $this->embedsOne(User::class);
             }

@@ -30,10 +30,10 @@ class User  extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    //Les attributs d'un utilisateur
     protected $fillable = [
     
-        
-        //utilisateur
         'nom',
         'prenom',
         'email',
@@ -47,25 +47,20 @@ class User  extends Authenticatable
         //Relation
         'departement',
 
-
-        //Relation
-      //  'sujetsEn',
-
-           //relation avec travaux
-           'Sujets',
-        //
+        //relation avec sujets de stage
+        'Sujets',
         'premlog',
 
 
 
        
     ];
-       //Relation
+       //Relation avec sujet de stage
        public  function sujets(){
         return $this->embedsMany(SujetStage::class);
         
      } 
-    //relation
+    //relation avec département
     public static function departements(){
         return $this->embedsOne(Departement::class);
     }
@@ -93,7 +88,7 @@ class User  extends Authenticatable
 
 
 
-    
+    //Envoyer le lien de réinitialiser mot de passe à l'email de l'utilisateur
     public function sendPasswordResetNotification($token)
     {
         //https://spa.test   $url = 'http://localhost:3000/U-reset?token=' . $token;

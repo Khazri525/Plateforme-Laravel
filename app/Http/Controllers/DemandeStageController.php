@@ -13,9 +13,7 @@ class DemandeStageController extends Controller
 {
 
 
-
-    
-      //Read All
+      //Retourner la liste demandes de stage
       public function index()
       {
           $demande = DemandeStage::all();
@@ -26,36 +24,15 @@ class DemandeStageController extends Controller
       }
   
 
-
-         //Read All demande de stagiaire
-         /*    public function index_demande_stagiaire()
-           {
-          $demande = DemandeStage::all();
-          return response()->json([
-              'status' =>200, 
-              'demandeStage' =>$demande
-          ]); 
-
-         
-      } */
- 
-       //Ajouter
+       //Ajouter demande de stage
        public function store(Request $request, $id)
        {
            $validator = Validator::make($request->all(),[
-               //'niveauetude'=>'required',
+            
               'typestage'=>'required',
                'nom_dept'=>'required',
                //'cv'=>'required|file',
-               //'cv'=>'required',
-               //'cin_demande'=>'required',
-             // 'cinoupassport_demande'=> 'unique:demande_stages,cinoupassport_demande', 
-               
-              
-               
-
-              
-       
+        
            ]);
    
            if($validator->fails()){
@@ -70,10 +47,8 @@ class DemandeStageController extends Controller
            else{    
 
             $demande = new DemandeStage;
-           // $demande ->niveauetude =$request->niveauetude;
             $demande ->typestage =$request->typestage;
             $demande ->nom_dept =$request->nom_dept;
-          //  $demande ->cinoupassport_demande =$request->cinoupassport_demande;
             $demande ->cv =$request->cv;
            
          
@@ -89,26 +64,8 @@ class DemandeStageController extends Controller
           } 
                 $demande->save();
  
-          /*   $demande = DemandeStage::create([
-               'niveauetude' => $request->niveauetude,
-               'typestage'=> $request->typestage,
-               'nom_dept'=> $request->nom_dept,
-               'cin'=> $request->cin,
-               'cv' => 'public/Cvs/'.$finalName,
-              
-               
-            ]); */
-   
                                        
             $insert_demndeStage_stagiaire= Stagiaire::where('_id', '=', $id)->update(['DemandeStage' => ['_id' => $id  ,'typestage'=>  $demande ->typestage ,'nom_dept'=>  $demande ->nom_dept ,'cv'=>  $demande ->cv ] ]);
-
-
-           /* 
-                $cin_demande= Stagiaire::where('cinoupassport_stagiaire' , $request->cinoupassport_demande)->push(
-                    ['demandeStages'=>[$demande ->_id, $demande ->typestage,$demande ->nom_dept ,$demande ->cv] ]);
-                 */
-            //.Relation
-
 
             return response()->json(
                 ['message' => 'Demande de stage ajoutée avec succès',
@@ -123,7 +80,7 @@ class DemandeStageController extends Controller
 
 
 
-    //Delete
+    //supprimer demande de stage
     public function destroy($id){
         $demande = DemandeStage::find($id);
         if($demande){

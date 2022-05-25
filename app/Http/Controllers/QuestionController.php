@@ -19,7 +19,9 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() //pour la création de l'examen
+
+     //Retourner la liste questions
+    public function index() 
     {
         $questions = Question::all()->slice(0, 5); // slice 5 for test after change to random 20
         return response()->json([
@@ -30,6 +32,8 @@ class QuestionController extends Controller
         ]);
     }
 
+
+    //Retourner questions par Test
     public function showByTest($id_test)
     {
         $testQuestions = TestsQuestion::where('test_id', $id_test)->get();
@@ -47,13 +51,14 @@ class QuestionController extends Controller
         } else {
             return response()->json(
                 [
-                    'validation_errors' => 'test non trouvée', //$validator->messages()
+                    'validation_errors' => 'test non trouvée', 
                     'status' => 404,
                 ]
             );
         }
     }
 
+    ////Retourner  questions par Test
     public function getQuestionsByTest($id_test)
     {
         $testQuestions = TestsQuestion::where('test_id', $id_test)->get();
@@ -78,7 +83,7 @@ class QuestionController extends Controller
         } else {
             return response()->json(
                 [
-                    'validation_errors' => 'test non trouvée', //$validator->messages()
+                    'validation_errors' => 'test non trouvée', 
                     'status' => 404,
                 ]
             );
@@ -86,7 +91,7 @@ class QuestionController extends Controller
     }
 
 
-
+    //Retourner question par id
     public function show($id)
     {
         $question = Question::find($id);
@@ -106,16 +111,8 @@ class QuestionController extends Controller
         }
     }
 
-    /*  public function Question() {
-        $questions = [];
-        $etudiant = Stagiaire::login();
-        if($etudiant->niveauetude === "bac") {
-            $questions = allquestion::all();
-        }
-        
-    } */
-
-
+   
+    //Retourner la liste questions
     public function allquestion()
     {
         $question = Question::all();
@@ -126,16 +123,16 @@ class QuestionController extends Controller
         ]);
     }
 
+    //somme temps questions
     public function sum()
     {
         $req = Question::all();
         $req = $req->pluck('time');
         return $req->sum();
-        /* return response()->json([
-            'Full time' => $req,
-            'Nombre de question' =>count($req),
-        ]);*/
+     
     }
+
+    //Retourner questions aléatoirement
     public function random()
     {
         $req = Question::all();
@@ -147,13 +144,16 @@ class QuestionController extends Controller
             'full Time' => $sum->sum(),
         ]);
     }
-    //return Questions::find(1)->getReponses;
+  
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
+    //Ajouter question
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -188,10 +188,7 @@ class QuestionController extends Controller
                 'questions' => [$question->id, $question->question, $question->niveau, $question->duree, $question->points]
 
             ]);
-            /*      $test = Test::where('titre',$request['titre'])->push([
-            'réponses'=>[$reponse->id , $reponse->reptexte , $reponse->repimage ,$reponse->repcorrecte]
-        ]);
-       */
+     
             return response()->json([
                 'status' => 200,
                 'test' => $test,
@@ -215,6 +212,8 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Modifier question
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -268,6 +267,8 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Supprimer question
     public function destroy($id)
     {
         return Question::destroy($id);
@@ -280,6 +281,8 @@ class QuestionController extends Controller
      * @param  str  $question
      * @return \Illuminate\Http\Response
      */
+
+     //Retourner question par mot clé
     public function search($question)
     {
         return Question::where('question', 'like', '%' . $question . '%')->get();

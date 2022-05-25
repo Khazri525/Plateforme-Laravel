@@ -315,13 +315,20 @@ Route::get('/test',[TestController::class,'index']);
 
 Route::post('identifier/stage',[AuthControllerStagiaire::class,' identifier']); */
 //calendrier
-Route::get('events',[EventController::class,'index']);
+/* Route::get('events',[EventController::class,'index']);
 Route::delete('event/{id}',[EventController::class, 'destroy']);
 Route::put('event/{id}',[EventController::class, 'update']);
 Route::post('event',[EventController::class, 'store']); 
 Route::get('event/{id}', [EventController::class, 'show']);
+ */
 
 
+ //calendrier
+Route::get('events', [EventController::class, 'index']);
+Route::delete('event/{id}', [EventController::class, 'destroy']);
+Route::put('event/{id}', [EventController::class, 'update']);
+Route::post('event', [EventController::class, 'store']);
+Route::get('event/{id}', [EventController::class, 'show']);
 
 
 

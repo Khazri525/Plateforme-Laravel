@@ -10,6 +10,8 @@ use App\Models\QuestionsReponse;
 
 class ReponseController extends Controller
 {
+
+    //Retourner  la liste réponses
     public function index()
     {
         $reponse = Reponse::all();
@@ -20,13 +22,15 @@ class ReponseController extends Controller
         ]);
     }
 
+
+    //Ajouter Réponse
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
 
-            //'repimage'=> 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'reptext' => 'required',
-            'repcorrecte' => 'required',
+            // 'required|image|mimes:jpeg,png,jpg|max:2048',
+           // 'reptext' => 'required',
+           // 'repcorrecte' => 'required',
 
         ]);
         if ($validator->fails()) {
@@ -45,8 +49,8 @@ class ReponseController extends Controller
                 $extension = $file->getClientOriginalExtension();
 
                 $filename = time() . '.' . $extension;
-                $file->move('uploads/images/', $filename);
-                $reponse->repimage = 'uploads/images/' . $filename;
+                $file->move('public/Upload/images/', $filename);
+                $reponse->repimage = 'public/Upload/images/' . $filename;
             }
 
             $reponse->save();
@@ -64,6 +68,8 @@ class ReponseController extends Controller
         }
     }
 
+
+    //Retourner réponses par question
     public function showByQuestion($id_question)
     {
         $questionResponses = QuestionsReponse::where('question_id', $id_question)->get();
@@ -88,20 +94,28 @@ class ReponseController extends Controller
         }
     }
 
+    //Retourner réponse par id
     public function show($id)
     {
         return Reponse::find($id);
     }
 
 
+    //Modifier réponse
     public function update(Request $request, $id)
     {
         $reponse = Reponse::find($id);
         $reponse->update($request->all());
-        return $reponse;
+       // return $reponse;
+       return response()->json(
+        [    'status'=>200,
+            'message' =>'Réponse modifiée avec succès' ,
+             'reponse'=>$reponse,
+        ]); 
     }
 
 
+    //Supprimer réponse
     public function destroy($id)
     {
         return Reponse::destroy($id);

@@ -14,9 +14,12 @@ use App\Models\Test;
 class Question extends Model 
 {
     use HasFactory;
+
+    //Relation avec réponse
     public static function reponses() {
         return $this->embedsMany(Reponse::class);
     }
+    //Les attributs de question
     protected $fillable = [
         'question',
         'niveau',
@@ -25,6 +28,8 @@ class Question extends Model
         'points',
         'réponses',
     ];
+
+    //Realtion avec test
     public static function test() {
         return $this->embedsOne(Test::class);
     }

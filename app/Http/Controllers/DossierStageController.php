@@ -10,7 +10,7 @@ class DossierStageController extends Controller
 {
    
 
-    //ajouter dossier de stage 
+    //Ajouter dossier de stage 
     public function ajouterDossier(Request $request , $id)
     {
       
@@ -38,13 +38,22 @@ class DossierStageController extends Controller
          
           
             if($request->hasFile('cinfile')){
-             $file = $request->file('cinfile');
+              $file = $request->file('cinfile');
              $filename = $file->getClientOriginalName();
              $extension = $file->getClientOriginalExtension();
              
              $finalName = time(). '_' . $filename ;
              $request->file('cinfile')->storeAs('public/Upload/DossierStage' , $finalName );
-             $dossier->cinfile='public/Upload/DossierStage/'.$finalName;
+             $dossier->cinfile='public/Upload/DossierStage/'.$finalName; 
+
+
+            /*  $filenameWithExt = $request->file('cinfile')->getClientOriginalName();
+             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+             $extension = $request->file('cinfile')->getClientOriginalExtension();
+             $fileNameToStore= $filename.'_'.time().'.'.$extension;
+             $pathcinfile = $request->file('cinfile')->storeAs('public/Upload/DossierStage' , $fileNameToStore);
+              */
+      
              } 
 
              if($request->hasFile('convfile')){
@@ -54,17 +63,31 @@ class DossierStageController extends Controller
                 
                 $finalName = time(). '_' . $filename ;
                 $request->file('convfile')->storeAs('public/Upload/DossierStage' , $finalName );
-                $dossier->convfile='public/Upload/DossierStage/'.$finalName;
+                $dossier->convfile='public/Upload/DossierStage/'.$finalName; 
+/* 
+                $filenameWithExt = $request->file('convfile')->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('convfile')->getClientOriginalExtension();
+                $fileNameToStore= $filename.'_'.time().'.'.$extension;
+                $pathconvfile = $request->file('convfile')->storeAs('public/Upload/DossierStage' , $fileNameToStore);
+                 */
                 } 
             
                 if($request->hasFile('cvfile')){
-                    $file = $request->file('cvfile');
+                   $file = $request->file('cvfile');
                     $filename = $file->getClientOriginalName();
                     $extension = $file->getClientOriginalExtension();
                     
                     $finalName = time(). '_' . $filename ;
                     $request->file('cvfile')->storeAs('public/Upload/DossierStage' , $finalName );
-                    $dossier->cvfile='public/Upload/DossierStage/'.$finalName;
+                    $dossier->cvfile='public/Upload/DossierStage/'.$finalName; 
+/* 
+                    $filenameWithExt = $request->file('cvfile')->getClientOriginalName();
+                    $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                    $extension = $request->file('cvfile')->getClientOriginalExtension();
+                    $fileNameToStore= $filename.'_'.time().'.'.$extension;
+                    $pathcvfile = $request->file('cvfile')->storeAs('public/Upload/DossierStage' , $fileNameToStore);
+                     */
                     } 
 
                     if($request->hasFile('lettfile')){
@@ -74,13 +97,20 @@ class DossierStageController extends Controller
                         
                         $finalName = time(). '_' . $filename ;
                         $request->file('lettfile')->storeAs('public/Upload/DossierStage' , $finalName );
-                        $dossier->lettfile='public/Upload/DossierStage/'.$finalName;
+                        $dossier->lettfile='public/Upload/DossierStage/'.$finalName; 
+
+                    /*     $filenameWithExt = $request->file('lettfile')->getClientOriginalName();
+                        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                        $extension = $request->file('lettfile')->getClientOriginalExtension();
+                        $fileNameToStore= $filename.'_'.time().'.'.$extension;
+                        $pathlettfile = $request->file('lettfile')->storeAs('public/Upload/DossierStage' , $fileNameToStore);
+                         */
                         } 
 
 
                    
-$insert_dossier_stagiaire= Stagiaire::where('_id', '=', $id)->update(['DossierStage' => ['_id' => $id  ,'cinfile'=> $dossier->cinfile,
-'cvfile'=> $dossier->cvfile, 'lettfile'=> $dossier->lettfile ,'convfile'=> $dossier->convfile ] ]);
+$insert_dossier_stagiaire= Stagiaire::where('_id', '=', $id)->update(['DossierStage' => ['_id' => $id  ,'cinfile'=> $request->cinfile,
+'cvfile'=> $request->cvfile, 'lettfile'=> $request->lettfile ,'convfile'=> $request->convfile ] ]);
 
                   $dossier ->save();
             
@@ -102,7 +132,7 @@ $insert_dossier_stagiaire= Stagiaire::where('_id', '=', $id)->update(['DossierSt
 
 
 
-     //retourner le dossier
+     //Retourner la liste dossiers de stage
      public function index()
      {
          $dossier = DossierStage::all();
@@ -116,23 +146,14 @@ $insert_dossier_stagiaire= Stagiaire::where('_id', '=', $id)->update(['DossierSt
 
 
 
-
-
-
-
-
-
-
-     //valide dossier
+     //Valide dossier de stage
           
  public function valideDoss (Request $request, $id)
  {
        $stagiaire = Stagiaire::find($id);
           if($stagiaire){
  
-              //$dept->update($request->all());
-             //'nom_dept' => $request->nom_dept,
-             //'nom_chef_dept'=> $request->nom_chef_dept,
+             //l'état du dossier du stagiaire est valide 
             $stagiaire->dossiervalideSt = 'oui';
             $stagiaire->save();
            
@@ -156,31 +177,13 @@ $insert_dossier_stagiaire= Stagiaire::where('_id', '=', $id)->update(['DossierSt
 
 
 
-    //invalide dossier
-          
+    //invalide dossier dossier de stage
  public function invalideDoss (Request $request, $id)
  {
  
-     /* $validator = Validator::make($request->all(),[
-        'nom_dept'=>'required ',
-        'nom_chef_dept'=>'required|string|max:20 ',
- 
-     ]);
-
-     if($validator->fails()){
-         return response()->json(
-             [ 'validation_errors' => $validator->messages() ,
-               'status'=>422,
-             ]);   
- 
-     } */
-         
           $stagiaire = Stagiaire::find($id);
           if($stagiaire){
- 
-              //$dept->update($request->all());
-             //'nom_dept' => $request->nom_dept,
-             //'nom_chef_dept'=> $request->nom_chef_dept,
+            //l'état du dossier du stagiaire est invalide 
             $stagiaire->dossiervalideSt = 'non';
             $stagiaire->save();
          
@@ -207,24 +210,5 @@ $insert_dossier_stagiaire= Stagiaire::where('_id', '=', $id)->update(['DossierSt
 
 
 
-    
-    //Delete
-    public function destroy($id){
-        $dossier = DossierStage::find($id);
-        if($dossier){
-            $dossier->delete();
-                return response()->json([
-                    'status' =>200,
-                    'message' =>'Dossier de stage supprimée avec succès',
-                ]);
-        }
-        else{
-            return response()->json([
-                'status' =>404,
-                'message' =>'Dossier de stage avec cet ID introuvable',
-            ]);
-        }
-    }
-
-
+  
 }

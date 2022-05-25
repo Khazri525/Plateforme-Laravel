@@ -18,7 +18,7 @@ class AuthControllerStagiaire extends Controller
 
 
 
-     //Read All
+     //Retourner la liste des stagiaires
      public function index()
      {
          $stagiaire = Stagiaire::all();
@@ -29,7 +29,7 @@ class AuthControllerStagiaire extends Controller
      }
  
 
-    //register stagiaire
+    //ajouter un stagiaire
 
     public function register(Request $request) {
 
@@ -42,8 +42,7 @@ class AuthControllerStagiaire extends Controller
             'telephone'=>'required|digits:8',
             'datenaissance'=>'required|date',
             'adresse'=> 'required|string|max:50',
-            'cinoupassport_stagiaire'=> 'required|unique:stagiaires,cinoupassport_stagiaire', //digits:8|
-            //'passport'=> 'digits:11|unique:stagiaires,passport',
+            'cinoupassport_stagiaire'=> 'required|unique:stagiaires,cinoupassport_stagiaire', 
             'niveauetude'=>'required|string',
             'specialite'=>'required|string',
             'filiere'=>'required|string',
@@ -55,16 +54,8 @@ class AuthControllerStagiaire extends Controller
             return response()->json([
                 'status'=>422,
                 'validation_errors'=>$validator->messages(),
-               // 'Erreur! Vérifier les Champs '
             ]);
         }
-        // else if($request->cinoupassport_stagiaire){
-        //     return response()->json([
-        //         'status'=>500,
-        //         'uni_errors'=>$validator->messages(),
-        //        // 'Erreur! Cin ou Passport déjà existe'
-        //     ]);
-        // }
         else {
 
        
@@ -80,12 +71,10 @@ class AuthControllerStagiaire extends Controller
 
             'cinoupassport_stagiaire'=> $request->cinoupassport_stagiaire,
 
-            //'passport'=> $request->passport,
             'niveauetude'=>$request->niveauetude,
             'specialite'=>$request->specialite,
             'filiere'=>$request->filiere,
              'etatSt'=>'etudiant',
-             //role
              'role'=> 'stagiaire',
 
             //relation avec dossier de stage
@@ -102,6 +91,8 @@ class AuthControllerStagiaire extends Controller
             //relation avec demande de stage
             'DemandeStage'=> $request->DemandeStage,
           
+
+             //relation avec les traveaux
             'Traveaux'=> $request->Traveaux,
               
          
@@ -109,17 +100,13 @@ class AuthControllerStagiaire extends Controller
             
         ]);
            
-              
-           
-
-
+        //Créer Token
         $token = $stagiaire->createToken('auth_token')->plainTextToken;
        return response()->json([
            'status'=>200,
            'username'=>$stagiaire->name,
            'stagiaire' => $stagiaire,
            'token'=>$token,
-           //role
            'role' => 'stagiaire',
            'message'=> 'vous êtes inscrits',
        ]);
@@ -129,7 +116,7 @@ class AuthControllerStagiaire extends Controller
 
     
 
-    
+//connecter stagiaire
 public function login (Request $request) {
     $validator = Validator::make($request->all(), [
         'email'=>'required|email|unique:stagiaires,email ',
@@ -193,7 +180,7 @@ public function login (Request $request) {
 
 
 
- //verifier login
+ //verifier la connexion
  public function incheck (){
     return response()->json([
         'message' => 'You are in' ,
@@ -203,7 +190,7 @@ public function login (Request $request) {
 }
 
 
-   //Log out
+   //Deconnexion
    public function logout(Request $request) {
     auth()->user()->tokens()->delete();
 
@@ -215,7 +202,7 @@ public function login (Request $request) {
 }
 
 
-
+//Envoyer la note de Test 
 public function submit_score (Request $request, $id){
     $stagiaire = Stagiaire::where('_id', '=', $id)->first();
     $stagiaire->update($request->all());
@@ -229,19 +216,16 @@ public function submit_score (Request $request, $id){
 }
 
 
-//modifier profile
+//modifier profil
 public function update_profile (Request $request){
     $validator = Validator::make($request->all(), [
         'name'=> 'required|string|min:3|max:20',
         'prenom'=> 'required|string|min:3|max:20',
-        //'email'=> 'required|email|unique:stagiaires,email',
         'email'=> 'required|email',
-       // 'password'=> 'required|string|confirmed|min:5',
         'telephone'=>'required|digits:8',
         'datenaissance'=>'required|date',
         'adresse'=> 'required|string|max:50',
-        'cinoupassport_stagiaire'=> 'unique:stagiaires,cinoupass_stagiaire', //digits:8|
-        //'passport'=> 'digits:11|unique:stagiaires,passport',
+        'cinoupassport_stagiaire'=> 'unique:stagiaires,cinoupass_stagiaire', 
         'niveauetude'=>'required|string',
         'specialite'=>'required|string',
         'filiere'=>'required|string',
@@ -259,14 +243,10 @@ public function update_profile (Request $request){
         'name'=> $request->name,
         'prenom'=> $request->prenom,
         'email'=> $request->email,
-       // 'password'=>Hash::make($request->password),
         'telephone'=>$request->telephone,
         'datenaissance'=>$request->datenaissance,
         'adresse'=> $request->adresse,
-
         'cinoupassport_stagiaire'=> $request->cinoupassport_stagiaire,
-
-        //'passport'=> $request->passport,
         'niveauetude'=>$request->niveauetude,
         'specialite'=>$request->specialite,
         'filiere'=>$request->filiere,
@@ -283,38 +263,5 @@ public function update_profile (Request $request){
 }
 
 
-
-
-//Test (Quiz)
-
-public function identifier(Request $request) {
-    $validator = Validator::make($request->all(),[
-        'email'=> 'required|email|unique:stagiaires,email',
-        'cinoupassport_stagiaire'=> 'required|unique:stagiaires',// cinoupass_stagiaire
-        'niveauetude'=>'required|string',
-
-    ]);
-    if($validator->fails()) {
-        return response()->json([
-            'validation_errors' => $validator->messages(),]);
-    }
-    else{
-        $etudiant= Stagiaire::create([
-            'email'=> $request['email'],
-            'cinoupassport_stagiaire'=> $request['cinoupassport_stagiaire'],
-            'niveauetude'=>$request['niveauetude'],
-        ]);
-        // $token = $etudiant->createToken($etudiant->cin.'_Token')->plainTextToken;
-   return response()->json([
-       'status'=>200,
-       'cinoupassport_stagiaire'=>$etudiant->cinoupassport_stagiaire,
-    //    'token'=>$token,
-       'message'=> 'bienvenue au test',
-   ]);
-      
-
-    }
-    
-}
 
 }

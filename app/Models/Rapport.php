@@ -7,6 +7,8 @@ use Jenssegers\Mongodb\Eloquent\Model;
 use App\Models\Stagiaire;
 class Rapport extends Model
 {
+
+    //Les attributs de rapport
     use HasFactory;
     
     protected $fillable = [

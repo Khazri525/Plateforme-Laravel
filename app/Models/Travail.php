@@ -8,6 +8,7 @@ use App\Models\Stagiaire;
 
 class Travail extends Model
 {
+    //Les attributs de travail
     use HasFactory;
 
     protected $fillable = [
@@ -16,7 +17,7 @@ class Travail extends Model
     ];
 
      
-    //relation dossier avec stagiaire
+    //Relation travail avec stagiaire
     public function getstagiaire() {
         return $this->embedsOne(Stagiaire::class);
         }

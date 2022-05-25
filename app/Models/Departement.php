@@ -14,9 +14,8 @@ class Departement extends Model
 
 {
   
+      //Les attributs de département
     use HasFactory;
-
-    //protected $table = 'departements';
     protected $fillable = [
         'nom_dept',
         'nom_chef_dept',
@@ -26,7 +25,7 @@ class Departement extends Model
 
     ];
 
-    //Relation
+    //Relation avec utilisateur
     public static function users(){
         return $this->embedsMany(User::class);
     }

@@ -11,12 +11,11 @@ use App\Models\Stagiaire;
 
 class DemandeStage extends Model
 {
-    use HasFactory;
 
+      //Les attributs de demande de stage
+    use HasFactory;
     protected $fillable = [
-       // 'niveauetude',
-        //'cin_demande',
-       // 'cinoupassport_demande',
+    
         'typestage',
         'nom_dept',
         'cv',

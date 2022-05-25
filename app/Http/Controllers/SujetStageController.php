@@ -9,7 +9,7 @@ use Validator;
 class SujetStageController extends Controller
 {
     
-      //Read All
+      //Retourner la liste sujets de stages
       public function index()
       {
           $sujet = SujetStage::all();
@@ -22,7 +22,7 @@ class SujetStageController extends Controller
 
 
 
-       //Ajouter
+       //Ajouter sujet de stage
        public function store(Request $request , $id)
        {
            $validator = Validator::make($request->all(),[
@@ -33,12 +33,7 @@ class SujetStageController extends Controller
                'nom_dept'=>'required',
                'typestage'=>'required',
                'periode'=>'required',
-               //'etatsujet'=>'required',
-
-               //Relation
-             //  'matricule_sj'=>'unique:sujetsEn,matricule_sj',
-               
-               
+             
            ]);
    
            if($validator->fails()){
@@ -51,8 +46,7 @@ class SujetStageController extends Controller
    
    
            else{    
-   
-     // return Compte::create($request->all());
+
               $sujet = SujetStage::create([
                'sujet' => $request->sujet,
                'technologies'=> $request->technologies,
@@ -63,26 +57,11 @@ class SujetStageController extends Controller
                'typestage'=> $request->typestage,
                'periode'=> $request->periode,
                'etatsujet'=> 'Publié',
-              // 'stusujet'=>'Active',
-
-              //Relation
-              // 'matricule_sj'=> $request->matricule_sj,
-
-
-
-
-
-
-               
-               
+  
             ]);
                      //Relation 
             $insert_sujets = User::where('_id', '=', $id)->push(['Sujets' => ['_id' => $id  ,'sujet'=> $sujet->sujet,'technologies'=> $sujet->technologies ] ]);
 
-                                                    
-      //.Relation
-
-        //.Relation
    
             return response()->json(
                 ['message' => 'Sujet de stage ajouté avec succès',
@@ -100,7 +79,7 @@ class SujetStageController extends Controller
 
        
 
-    //Delete
+    //Supprimer sujet de stage
     public function destroy($id){
         $sujet =SujetStage::find($id);
         if($sujet){
@@ -128,7 +107,7 @@ class SujetStageController extends Controller
 
 
     
-    //retourner un sujet par Id
+    //retourner un sujet de stage par Id
    public function show($id){
 
     $sujet= SujetStage::find($id);
@@ -157,7 +136,7 @@ class SujetStageController extends Controller
 
 
 
-     //Modifier utilisateur
+     //Modifier sujet de stage
      public function update(Request $request, $id)
      {
      
@@ -187,10 +166,7 @@ class SujetStageController extends Controller
               if($sujet){
      
                 $sujet->update($request->all());
-                 //'nom_dept' => $request->nom_dept,
-                 //'nom_chef_dept'=> $request->nom_chef_dept,
-            
-    
+             
                  $sujet->save();
                
                   return response()->json(

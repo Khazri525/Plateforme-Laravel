@@ -10,24 +10,23 @@ class TravailController extends Controller
 {
 
 
+
+  //Retourner la liste traveaux
   public function getAll(){
 
     $traveau_files = Travail::all();
 
-    dd($traveau_files);
 
-    /*return response()->json([
-        'status' =>200,
-        'lisTravail' => $traveau_files
-    ]);*/
 
   }
   
+
+  //Ajouter travail
   public function store(Request $request, $id)
   {
     $validator = Validator::make($request->all(),[
      // 'bfile'=>'file|mimes:pdf,docx ',
-      // 'description'=>'string|max:200 ',
+      'description'=>'string|max:200 ',
     
    ]);
 
@@ -56,11 +55,8 @@ class TravailController extends Controller
                                          
 $insert_traveaux_stagiaire= Stagiaire::where('_id', '=', $id)->push(['Traveaux' => ['_id' => $id  ,'tfile'=> $travail->tfile ,'description'=> $travail->description ] ]);
 
-
-
            $travail ->save();
           
-  
 
               return response()->json(
                   ['message' => 'Travail déposé avec succès',
@@ -70,7 +66,6 @@ $insert_traveaux_stagiaire= Stagiaire::where('_id', '=', $id)->push(['Traveaux' 
                   ] );
      
              }
-
 
   }
    
